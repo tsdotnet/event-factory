@@ -1,0 +1,13 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "target": "es5",
+    "strict": true,
+    "sourceMap": true,
+    "removeComments": false,
+    "moduleResolution": "node"
+  },
+  "include": [
+    "src/**/*"
+  ]
+}

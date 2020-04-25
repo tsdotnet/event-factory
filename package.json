@@ -1,0 +1,44 @@
+{
+  "name": "event-publisher",
+  "version": "1.0.0-beta",
+  "description": "A strongly typed protected event creator/publisher/signaler for use with TypeScript and JavaScript.",
+  "author": "electricessence",
+  "license": "MIT",
+  "types": "dist/types/EventPublisher.d.ts",
+  "main": "dist/cjs/EventPublisher.js",
+  "module": "dist/es2015/EventPublisher.js",
+  "keywords": [
+    "TypeScript",
+    "collection",
+    "registry"
+  ],
+  "scripts": {
+    "clean": "rimraf dist/*",
+    "build:types": "tsc -p tsconfig/types.json",
+    "build:es2015": "tsc -p tsconfig/es2015.json",
+    "build:es6": "tsc -p tsconfig/es6.json",
+    "build:cjs": "tsc -p tsconfig/cjs.json",
+    "build": "run-s clean build:*",
+    "prepare": "npm run build",
+    "test": "ts-node -P ./tsconfig/cjs.json ./node_modules/jasmine/bin/jasmine --config=spec/support/jasmine.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/electricessence/EventPublisher.git"
+  },
+  "bugs": {
+    "url": "https://github.com/electricessence/EventPublisher/issues"
+  },
+  "homepage": "https://github.com/electricessence/EventPublisher#readme",
+  "devDependencies": {
+    "@types/jasmine": "^3.5.10",
+    "jasmine": "^3.5.0",
+    "npm-run-all": "^4.1.5",
+    "rimraf": "^3.0.2",
+    "ts-node": "^8.9.0",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "ordered-registry": "^1.0.1-beta"
+  }
+}
