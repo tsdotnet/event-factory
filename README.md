@@ -53,28 +53,28 @@ interface Event<T>
 	 */
 	(listener: Listener<T>): Unsubscribe;
 
-    /**
-     * Add an entry to the end of the registry.
-     * @param value
-     */
+	/**
+	* Add an entry to the end of the registry.
+	* @param value
+	*/
 
-    add(value: T): number;
-    /**
-     * Remove an entry.
-     * @param id
-     */
-
-    remove(id: number): boolean;
-    /**
-     * Adds an entry to the registry if it doesn't exist.
-     * @param value
-     */
-
-    register(value: T): number;
-    /**
-     * Clears all entries.
-     */
-    clear(): void;
+	add(value: T): number;
+	/**
+	* Remove an entry.
+	* @param id
+	*/
+	remove(id: number): boolean;
+	
+	/**
+	* Adds an entry to the registry if it doesn't exist.
+	* @param value
+	*/
+	register(value: T): number;
+	
+	/**
+	* Clears all entries.
+	*/
+	clear(): void;
 }
 ```
 
