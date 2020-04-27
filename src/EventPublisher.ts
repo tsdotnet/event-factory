@@ -33,8 +33,9 @@ export class EventPublisher<T> implements IEventPublisher<T>
 	protected readonly _registry: OrderedRegistry<Listener<T>>;
 	private readonly _event: Event<T>;
 
+	public clearListenersAfterPublish: boolean = false;
+
 	constructor(
-		public clearListenersAfterPublish: boolean = false,
 		public remaining: number = Number.POSITIVE_INFINITY)
 	{
 		const r = new OrderedRegistry<Listener<T>>();
@@ -108,6 +109,8 @@ export class EventPublisher<T> implements IEventPublisher<T>
 		this.publish(payload, true);
 	}
 }
+
+export default EventPublisher;
 
 function dummy()
 {
