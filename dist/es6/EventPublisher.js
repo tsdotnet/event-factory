@@ -4,13 +4,16 @@
  */
 import { OrderedRegistry } from "ordered-registry";
 export class EventPublisher {
-    constructor(remaining = Number.POSITIVE_INFINITY) {
-        this.remaining = remaining;
+    constructor(_remaining = Number.POSITIVE_INFINITY) {
+        this._remaining = _remaining;
+        /**
+         * When true, will clear listeners after every publish.
+         */
         this.clearListenersAfterPublish = false;
         const r = new OrderedRegistry();
         this._registry = r;
         const add = (listener) => {
-            return this.remaining > 0 ? r.add(listener) : NaN;
+            return this._remaining > 0 ? r.add(listener) : NaN;
         };
         const remove = (id) => r.remove(id);
         const event = (listener) => {
@@ -22,10 +25,29 @@ export class EventPublisher {
         event.add = add;
         event.remove = remove;
         event.register = (listener) => {
-            return this.remaining > 0 ? r.register(listener) : NaN;
+            return this._remaining > 0 ? r.register(listener) : NaN;
         };
         event.clear = () => r.clear();
         this._event = Object.freeze(event);
+    }
+    /**
+     * Gets the remaining number of publishes that will emit to listeners.
+     * When this number is zero all listeners are cleared and none can be added.
+     */
+    get remaining() {
+        return this._remaining;
+    }
+    /**
+     * Sets the remaining number of publishes that will emit to listeners.
+     * A value of zero will clear all listeners.
+     * @param value
+     */
+    set remaining(value) {
+        if (isNaN(value))
+            return;
+        this._remaining = value;
+        if (!value)
+            this._registry.clear();
     }
     /**
      * The event object to subscribe to.
@@ -39,11 +61,11 @@ export class EventPublisher {
      * @param reverse
      */
     publish(payload, reverse = false) {
-        let r = this.remaining;
+        let r = this._remaining;
         if (isNaN(r) || r <= 0)
             return;
         if (isFinite(r))
-            r = --this.remaining;
+            r = --this._remaining;
         if (reverse)
             this._registry.forEachReverse(f);
         else

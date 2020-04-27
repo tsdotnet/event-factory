@@ -31,18 +31,21 @@ export interface IEventPublisher<T>
 export class EventPublisher<T> implements IEventPublisher<T>
 {
 	protected readonly _registry: OrderedRegistry<Listener<T>>;
-	private readonly _event: Event<T>;
+	protected readonly _event: Event<T>;
 
+	/**
+	 * When true, will clear listeners after every publish.
+	 */
 	public clearListenersAfterPublish: boolean = false;
 
 	constructor(
-		public remaining: number = Number.POSITIVE_INFINITY)
+		protected _remaining: number = Number.POSITIVE_INFINITY)
 	{
 		const r = new OrderedRegistry<Listener<T>>();
 		this._registry = r;
 		const add = (listener: Listener<T>) =>
 		{
-			return this.remaining > 0 ? r.add(listener) : NaN;
+			return this._remaining > 0 ? r.add(listener) : NaN;
 		};
 		const remove = (id: number) => r.remove(id);
 		const event = (listener: Listener<T>) =>
@@ -57,10 +60,31 @@ export class EventPublisher<T> implements IEventPublisher<T>
 		event.remove = remove;
 		event.register = (listener: Listener<T>) =>
 		{
-			return this.remaining > 0 ? r.register(listener) : NaN;
+			return this._remaining > 0 ? r.register(listener) : NaN;
 		};
 		event.clear = () => r.clear();
 		this._event = Object.freeze(event);
+	}
+
+	/**
+	 * Gets the remaining number of publishes that will emit to listeners.
+	 * When this number is zero all listeners are cleared and none can be added.
+	 */
+	get remaining(): number
+	{
+		return this._remaining;
+	}
+
+	/**
+	 * Sets the remaining number of publishes that will emit to listeners.
+	 * A value of zero will clear all listeners.
+	 * @param value
+	 */
+	set remaining(value: number)
+	{
+		if (isNaN(value)) return;
+		this._remaining = value;
+		if (!value) this._registry.clear();
 	}
 
 	/**
@@ -78,9 +102,9 @@ export class EventPublisher<T> implements IEventPublisher<T>
 	 */
 	publish(payload: T, reverse: boolean = false): void
 	{
-		let r = this.remaining;
+		let r = this._remaining;
 		if (isNaN(r) || r <= 0) return;
-		if (isFinite(r)) r = --this.remaining;
+		if (isFinite(r)) r = --this._remaining;
 		if (reverse) this._registry.forEachReverse(f);
 		else this._registry.forEach(f);
 		if (r == 0 || this.clearListenersAfterPublish) this._registry.clear();

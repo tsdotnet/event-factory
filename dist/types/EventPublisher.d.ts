@@ -19,11 +19,25 @@ export interface IEventPublisher<T> {
     readonly event: Readonly<Event<T>>;
 }
 export declare class EventPublisher<T> implements IEventPublisher<T> {
-    remaining: number;
+    protected _remaining: number;
     protected readonly _registry: OrderedRegistry<Listener<T>>;
-    private readonly _event;
+    protected readonly _event: Event<T>;
+    /**
+     * When true, will clear listeners after every publish.
+     */
     clearListenersAfterPublish: boolean;
-    constructor(remaining?: number);
+    constructor(_remaining?: number);
+    /**
+     * Gets the remaining number of publishes that will emit to listeners.
+     * When this number is zero all listeners are cleared and none can be added.
+     */
+    get remaining(): number;
+    /**
+     * Sets the remaining number of publishes that will emit to listeners.
+     * A value of zero will clear all listeners.
+     * @param value
+     */
+    set remaining(value: number);
     /**
      * The event object to subscribe to.
      */

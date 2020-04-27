@@ -6,15 +6,18 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var ordered_registry_1 = require("ordered-registry");
 var EventPublisher = /** @class */ (function () {
-    function EventPublisher(remaining) {
+    function EventPublisher(_remaining) {
         var _this = this;
-        if (remaining === void 0) { remaining = Number.POSITIVE_INFINITY; }
-        this.remaining = remaining;
+        if (_remaining === void 0) { _remaining = Number.POSITIVE_INFINITY; }
+        this._remaining = _remaining;
+        /**
+         * When true, will clear listeners after every publish.
+         */
         this.clearListenersAfterPublish = false;
         var r = new ordered_registry_1.OrderedRegistry();
         this._registry = r;
         var add = function (listener) {
-            return _this.remaining > 0 ? r.add(listener) : NaN;
+            return _this._remaining > 0 ? r.add(listener) : NaN;
         };
         var remove = function (id) { return r.remove(id); };
         var event = function (listener) {
@@ -26,11 +29,34 @@ var EventPublisher = /** @class */ (function () {
         event.add = add;
         event.remove = remove;
         event.register = function (listener) {
-            return _this.remaining > 0 ? r.register(listener) : NaN;
+            return _this._remaining > 0 ? r.register(listener) : NaN;
         };
         event.clear = function () { return r.clear(); };
         this._event = Object.freeze(event);
     }
+    Object.defineProperty(EventPublisher.prototype, "remaining", {
+        /**
+         * Gets the remaining number of publishes that will emit to listeners.
+         * When this number is zero all listeners are cleared and none can be added.
+         */
+        get: function () {
+            return this._remaining;
+        },
+        /**
+         * Sets the remaining number of publishes that will emit to listeners.
+         * A value of zero will clear all listeners.
+         * @param value
+         */
+        set: function (value) {
+            if (isNaN(value))
+                return;
+            this._remaining = value;
+            if (!value)
+                this._registry.clear();
+        },
+        enumerable: true,
+        configurable: true
+    });
     Object.defineProperty(EventPublisher.prototype, "event", {
         /**
          * The event object to subscribe to.
@@ -48,11 +74,11 @@ var EventPublisher = /** @class */ (function () {
      */
     EventPublisher.prototype.publish = function (payload, reverse) {
         if (reverse === void 0) { reverse = false; }
-        var r = this.remaining;
+        var r = this._remaining;
         if (isNaN(r) || r <= 0)
             return;
         if (isFinite(r))
-            r = --this.remaining;
+            r = --this._remaining;
         if (reverse)
             this._registry.forEachReverse(f);
         else
