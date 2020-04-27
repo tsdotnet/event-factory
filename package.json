@@ -1,6 +1,6 @@
 {
   "name": "event-publisher",
-  "version": "1.0.3-beta",
+  "version": "1.0.4-beta",
   "description": "A strongly typed protected event creator/publisher/signaler for use with TypeScript and JavaScript.",
   "author": "electricessence",
   "license": "MIT",
@@ -39,6 +39,6 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
-    "ordered-registry": "^1.0.1-beta"
+    "ordered-registry": "^1.0.7"
   }
 }

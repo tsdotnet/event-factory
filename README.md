@@ -1,7 +1,7 @@
 # EventPublisher
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/electricessence/EventPublisher/blob/master/LICENSE)
-[![npm version](https://img.shields.io/npm/v/subscribableevent.svg?style=flat-square)](https://www.npmjs.com/package/event-publisher)
+[![npm version](https://img.shields.io/npm/v/event-publisher.svg?style=flat-square)](https://www.npmjs.com/package/event-publisher)
 
 A strongly typed protected event creator/publisher/signaler for use with TypeScript and JavaScript.
 
@@ -27,9 +27,9 @@ export class MyObservable<T> {
 
 	constructor()
 	{
-		const start = new EventPublisher<void>();
+		const start = new EventPublisher<void>(1);
 		const update = new EventPublisher<T>();
-		const complete = new EventPublisher<void>();
+		const complete = new EventPublisher<void>(1);
 		this._dispatcher = { start, update, complete };
 		this.start = start.event;
 		this.update = update.event;
