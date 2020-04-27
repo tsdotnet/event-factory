@@ -26,8 +26,10 @@ describe('EventPublisher', () =>
 	{
 		let count = 0;
 		const max = 3;
-		const pub = new EventPublisher<void>(max);
-		pub.clearListenersAfterPublish = true;
+		const pub = new EventPublisher<void>({
+			remaining: max,
+			clearListenersAfterPublish: true
+		});
 		for (let i = 1; i <= max; i++)
 		{
 			pub.event.add(() => ++count);
@@ -36,6 +38,33 @@ describe('EventPublisher', () =>
 		}
 		pub.publish();
 		expect(count).toBe(3);
+	});
+
+	function testChildPub(max: number, parent: EventPublisher<void>, child: EventPublisher<void>)
+	{
+		let count = 0;
+		child.event.add(() => ++count);
+		for (let i = 1; i <= max; i++)
+		{
+			parent.publish();
+			expect(count).toBe(i);
+		}
+		parent.publish();
+		expect(count).toBe(3);
+	}
+
+	it('should publish to pre events', () =>
+	{
+		const max = 3;
+		const pub = new EventPublisher<void>(max);
+		testChildPub(max, pub, pub.addPre(max).addPre(max));
+	});
+
+	it('should publish to post events', () =>
+	{
+		const max = 3;
+		const pub = new EventPublisher<void>(max);
+		testChildPub(max, pub, pub.addPost(max).addPost(max));
 	});
 
 });
