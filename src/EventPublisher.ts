@@ -52,9 +52,11 @@ export interface EventPublisherOptions
 export class EventPublisher<T>
 {
 	protected readonly _registry = new OrderedRegistry<Listener<T>>();
+	protected readonly _pre = new OrderedRegistry<EventPublisher<T>>();
+	protected readonly _post = new OrderedRegistry<EventPublisher<T>>();
 	protected readonly _event: Event<T>;
 
-	public options: EventPublisherOptions;
+	public readonly options: EventPublisherOptions;
 
 	constructor(remaining?: number)
 	constructor(options?: EventPublisherOptions)
@@ -88,8 +90,6 @@ export class EventPublisher<T>
 		Object.freeze(this);
 	}
 
-	protected _pre?: OrderedRegistry<EventPublisher<T>>;
-
 	/**
 	 * Adds an event publisher to be triggered before the event is published.
 	 */
@@ -98,11 +98,9 @@ export class EventPublisher<T>
 	addPre(options?: any): EventPublisher<T>
 	{
 		const p = new EventPublisher<T>(options);
-		(this._pre || (this._pre = new OrderedRegistry<EventPublisher<T>>())).add(p);
+		this._pre.add(p);
 		return p;
 	}
-
-	protected _post?: OrderedRegistry<EventPublisher<T>>;
 
 	/**
 	 * Adds an event publisher to be triggered after the event is published.
@@ -112,7 +110,7 @@ export class EventPublisher<T>
 	addPost(options?: any): EventPublisher<T>
 	{
 		const p = new EventPublisher<T>(options);
-		(this._post || (this._post = new OrderedRegistry<EventPublisher<T>>())).add(p);
+		this._post.add(p);
 		return p;
 	}
 
@@ -162,10 +160,10 @@ export class EventPublisher<T>
 
 		try
 		{
-			_._pre?.forEach(publish);
+			_._pre.forEach(publish);
 			if (o.reversePublish) _._registry.forEachReverse(trigger);
 			else _._registry.forEach(trigger);
-			_._post?.forEach(publish);
+			_._post.forEach(publish);
 		} catch (e)
 		{
 			switch (o.errorHandling)
