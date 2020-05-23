@@ -1,11 +1,16 @@
 {
   "compileOnSave": true,
   "compilerOptions": {
-    "target": "es5",
+    "declaration": true,
+    "esModuleInterop": true,
+    "target": "es2015",
+    "module": "commonjs",
     "strict": true,
     "sourceMap": true,
     "removeComments": false,
-    "moduleResolution": "node"
+    "importHelpers": true,
+    "moduleResolution": "node",
+    "outDir": "dist"
   },
   "include": [
     "src/**/*"

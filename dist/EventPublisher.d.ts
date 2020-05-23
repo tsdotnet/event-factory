@@ -2,15 +2,19 @@
  * @author electricessence / https://github.com/electricessence/
  * Licensing: MIT
  */
-import { IOrderedRegistry, OrderedRegistry } from "ordered-registry";
+import { OrderedAutoRegistry } from '@tsdotnet/ordered-registry';
 export declare type Listener<T> = (value: T) => void;
 export declare type Unsubscribe = () => void;
-export interface Event<T> extends Readonly<IOrderedRegistry<Listener<T>>> {
+export interface Event<T> {
     /**
      * Adds a listener and return an unsubscribe function.
      * @param listener
      */
     (listener: Listener<T>): Unsubscribe;
+    add(listener: Listener<T>): number;
+    register(listener: Listener<T>): number;
+    remove(id: number): Listener<T> | undefined;
+    clear(): number;
 }
 export declare const enum ErrorHandling {
     Throw = 0,
@@ -37,23 +41,13 @@ export interface EventPublisherOptions {
     remaining?: number;
 }
 export declare class EventPublisher<T> {
-    protected readonly _registry: OrderedRegistry<Listener<T>>;
+    protected readonly _registry: OrderedAutoRegistry<Listener<T>>;
+    protected readonly _pre: OrderedAutoRegistry<EventPublisher<T>>;
+    protected readonly _post: OrderedAutoRegistry<EventPublisher<T>>;
     protected readonly _event: Event<T>;
-    options: EventPublisherOptions;
-    constructor(remaining?: number);
+    readonly options: EventPublisherOptions;
+    constructor(remaining: number);
     constructor(options?: EventPublisherOptions);
-    protected _pre?: OrderedRegistry<EventPublisher<T>>;
-    /**
-     * Adds an event publisher to be triggered before the event is published.
-     */
-    addPre(remaining?: number): EventPublisher<T>;
-    addPre(options?: EventPublisherOptions): EventPublisher<T>;
-    protected _post?: OrderedRegistry<EventPublisher<T>>;
-    /**
-     * Adds an event publisher to be triggered after the event is published.
-     */
-    addPost(remaining?: number): EventPublisher<T>;
-    addPost(options?: EventPublisherOptions): EventPublisher<T>;
     /**
      * Gets the remaining number of publishes that will emit to listeners.
      * When this number is zero all listeners are cleared and none can be added.
@@ -68,7 +62,31 @@ export declare class EventPublisher<T> {
     /**
      * The event object to subscribe to.
      */
-    get event(): Event<T>;
+    get event(): Readonly<Event<T>>;
+    /**
+     * Adds an event publisher to be triggered before the event is published.
+     * @param {number} remaining
+     * @return {EventPublisher<T>}
+     */
+    addPre(remaining: number): EventPublisher<T>;
+    /**
+     * Adds an event publisher to be triggered before the event is published.
+     * @param {EventPublisherOptions} options
+     * @return {EventPublisher<T>}
+     */
+    addPre(options?: EventPublisherOptions): EventPublisher<T>;
+    /**
+     * Adds an event publisher to be triggered after the event is published.
+     * @param {number} remaining
+     * @return {EventPublisher<T>}
+     */
+    addPost(remaining: number): EventPublisher<T>;
+    /**
+     * Adds an event publisher to be triggered after the event is published.
+     * @param {EventPublisherOptions} options
+     * @return {EventPublisher<T>}
+     */
+    addPost(options?: EventPublisherOptions): EventPublisher<T>;
     /**
      * Dispatches payload to listeners.
      * @param payload

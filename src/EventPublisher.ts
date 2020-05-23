@@ -3,24 +3,32 @@
  * Licensing: MIT
  */
 
-import {IOrderedRegistry, OrderedRegistry} from "ordered-registry";
+import {OrderedAutoRegistry} from '@tsdotnet/ordered-registry';
 
 export type Listener<T> = (value: T) => void;
 export type Unsubscribe = () => void;
 
-export interface Event<T> extends Readonly<IOrderedRegistry<Listener<T>>>
+export interface Event<T>
 {
 	/**
 	 * Adds a listener and return an unsubscribe function.
 	 * @param listener
 	 */
 	(listener: Listener<T>): Unsubscribe;
+
+	add (listener: Listener<T>): number;
+
+	register (listener: Listener<T>): number;
+
+	remove (id: number): Listener<T> | undefined;
+
+	clear (): number;
 }
 
 export const enum ErrorHandling
 {
-	Throw = 0,
-	Log = 1,
+	Throw  = 0,
+	Log    = 1,
 	Ignore = -1
 }
 
@@ -51,39 +59,35 @@ export interface EventPublisherOptions
 
 export class EventPublisher<T>
 {
-	protected readonly _registry = new OrderedRegistry<Listener<T>>();
-	protected readonly _pre = new OrderedRegistry<EventPublisher<T>>();
-	protected readonly _post = new OrderedRegistry<EventPublisher<T>>();
+	protected readonly _registry = new OrderedAutoRegistry<Listener<T>>();
+	protected readonly _pre = new OrderedAutoRegistry<EventPublisher<T>>();
+	protected readonly _post = new OrderedAutoRegistry<EventPublisher<T>>();
 	protected readonly _event: Event<T>;
 
 	public readonly options: EventPublisherOptions;
 
-	constructor(remaining?: number)
-	constructor(options?: EventPublisherOptions)
-	constructor(options?: EventPublisherOptions | number)
+	constructor (remaining: number)
+	constructor (options?: EventPublisherOptions)
+	constructor (options?: EventPublisherOptions | number)
 	{
 		const r = this._registry, o = createOptions(options);
 		this.options = o;
-		const add = (listener: Listener<T>) =>
-		{
+		const add = (listener: Listener<T>) => {
 			const rem = o.remaining;
-			return rem && rem > 0 ? r.add(listener) : NaN;
+			return rem && rem>0 ? r.add(listener) : NaN;
 		};
 		const remove = (id: number) => r.remove(id);
-		const event = (listener: Listener<T>) =>
-		{
+		const event = (listener: Listener<T>) => {
 			const id = add(listener);
-			return isNaN(id) ? dummy : () =>
-			{
-				remove(id)
+			return isNaN(id) ? dummy : () => {
+				remove(id);
 			};
 		};
 		event.add = add;
 		event.remove = remove;
-		event.register = (listener: Listener<T>) =>
-		{
+		event.register = (listener: Listener<T>) => {
 			const rem = o.remaining;
-			return rem && rem > 0 ? r.register(listener) : NaN;
+			return rem && rem>0 ? r.register(listener) : NaN;
 		};
 		event.clear = () => r.clear();
 		this._event = Object.freeze(event);
@@ -91,37 +95,13 @@ export class EventPublisher<T>
 	}
 
 	/**
-	 * Adds an event publisher to be triggered before the event is published.
-	 */
-	addPre(remaining?: number): EventPublisher<T>
-	addPre(options?: EventPublisherOptions): EventPublisher<T>
-	addPre(options?: any): EventPublisher<T>
-	{
-		const p = new EventPublisher<T>(options);
-		this._pre.add(p);
-		return p;
-	}
-
-	/**
-	 * Adds an event publisher to be triggered after the event is published.
-	 */
-	addPost(remaining?: number): EventPublisher<T>
-	addPost(options?: EventPublisherOptions): EventPublisher<T>
-	addPost(options?: any): EventPublisher<T>
-	{
-		const p = new EventPublisher<T>(options);
-		this._post.add(p);
-		return p;
-	}
-
-	/**
 	 * Gets the remaining number of publishes that will emit to listeners.
 	 * When this number is zero all listeners are cleared and none can be added.
 	 */
-	get remaining(): number
+	get remaining (): number
 	{
 		const rem = this.options.remaining;
-		return typeof rem == 'number' ? rem : Number.POSITIVE_INFINITY;
+		return typeof rem=='number' ? rem : Number.POSITIVE_INFINITY;
 	}
 
 	/**
@@ -129,44 +109,97 @@ export class EventPublisher<T>
 	 * A value of zero will clear all listeners.
 	 * @param value
 	 */
-	set remaining(value: number)
+	set remaining (value: number)
 	{
-		if (isNaN(value)) return;
+		if(isNaN(value)) return;
 		this.options.remaining = value;
-		if (!value) this._registry.clear();
+		if(!value) this._registry.clear();
 	}
 
 	/**
 	 * The event object to subscribe to.
 	 */
-	get event(): Event<T>
+	get event (): Readonly<Event<T>>
 	{
 		return this._event;
+	}
+
+	/**
+	 * Adds an event publisher to be triggered before the event is published.
+	 * @param {number} remaining
+	 * @return {EventPublisher<T>}
+	 */
+	addPre (remaining: number): EventPublisher<T>
+
+	/**
+	 * Adds an event publisher to be triggered before the event is published.
+	 * @param {EventPublisherOptions} options
+	 * @return {EventPublisher<T>}
+	 */
+	addPre (options?: EventPublisherOptions): EventPublisher<T>
+
+	/**
+	 * Adds an event publisher to be triggered before the event is published.
+	 * @param {number | EventPublisherOptions} options
+	 * @return {EventPublisher<T>}
+	 */
+	addPre (options?: number | EventPublisherOptions): EventPublisher<T>
+	{
+		const p = new EventPublisher<T>(options as any);
+		this._pre.add(p);
+		return p;
+	}
+
+	/**
+	 * Adds an event publisher to be triggered after the event is published.
+	 * @param {number} remaining
+	 * @return {EventPublisher<T>}
+	 */
+	addPost (remaining: number): EventPublisher<T>
+
+	/**
+	 * Adds an event publisher to be triggered after the event is published.
+	 * @param {EventPublisherOptions} options
+	 * @return {EventPublisher<T>}
+	 */
+	addPost (options?: EventPublisherOptions): EventPublisher<T>
+
+	/**
+	 * Adds an event publisher to be triggered after the event is published.
+	 * @param {number | EventPublisherOptions} options
+	 * @return {EventPublisher<T>}
+	 */
+	addPost (options?: number | EventPublisherOptions): EventPublisher<T>
+	{
+		const p = new EventPublisher<T>(options as any);
+		this._post.add(p);
+		return p;
 	}
 
 	/**
 	 * Dispatches payload to listeners.
 	 * @param payload
 	 */
-	publish(payload: T): void
+	publish (payload: T): void
 	{
 		const _ = this, o = _.options;
 		let r = o.remaining;
-		if (r === 0) return;
-		if (!r || isNaN(r)) r = Number.POSITIVE_INFINITY;
-		if (r < 0) return;
+		if(r===0) return;
+		if(!r || isNaN(r)) r = Number.POSITIVE_INFINITY;
+		if(r<0) return;
 
-		if (isFinite(r)) o.remaining = --r;
+		if(isFinite(r)) o.remaining = --r;
 
 		try
 		{
-			_._pre.forEach(publish);
-			if (o.reversePublish) _._registry.forEachReverse(trigger);
-			else _._registry.forEach(trigger);
-			_._post.forEach(publish);
-		} catch (e)
+			for(const e of _._pre) publish(e.value);
+			if(o.reversePublish) for(const e of _._registry.reversed) trigger(e.value);
+			else for(const e of _._registry) trigger(e.value);
+			for(const e of _._post) publish(e.value);
+		}
+		catch(e)
 		{
-			switch (o.errorHandling)
+			switch(o.errorHandling)
 			{
 				case ErrorHandling.Ignore:
 					break;
@@ -176,18 +209,19 @@ export class EventPublisher<T>
 				default:
 					throw e;
 			}
-		} finally
+		}
+		finally
 		{
-			if (r == 0 || o.clearListenersAfterPublish) _._registry.clear();
+			if(r==0 || o.clearListenersAfterPublish) _._registry.clear();
 		}
 
 		// abstract away ids.
-		function trigger(listener: Listener<T>)
+		function trigger (listener: Listener<T>)
 		{
 			listener(payload);
 		}
 
-		function publish(p: EventPublisher<T>)
+		function publish (p: EventPublisher<T>)
 		{
 			p.publish(payload);
 		}
@@ -197,13 +231,14 @@ export class EventPublisher<T>
 
 export default EventPublisher;
 
-function dummy()
+function dummy ()
+// eslint-disable-next-line @typescript-eslint/no-empty-function
 {
 }
 
-function createOptions(options?: EventPublisherOptions | number): EventPublisherOptions
+function createOptions (options?: EventPublisherOptions | number): EventPublisherOptions
 {
-	return typeof options == 'number' ? {remaining: options} : !options ? {} : {
+	return typeof options=='number' ? {remaining: options} : !options ? {} : {
 		reversePublish: options.reversePublish,
 		errorHandling: options.errorHandling,
 		clearListenersAfterPublish: options.clearListenersAfterPublish,

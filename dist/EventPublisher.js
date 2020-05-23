@@ -1,11 +1,16 @@
+"use strict";
 /*!
  * @author electricessence / https://github.com/electricessence/
  * Licensing: MIT
  */
-import { OrderedRegistry } from "ordered-registry";
-export class EventPublisher {
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.EventPublisher = void 0;
+const ordered_registry_1 = require("@tsdotnet/ordered-registry");
+class EventPublisher {
     constructor(options) {
-        this._registry = new OrderedRegistry();
+        this._registry = new ordered_registry_1.OrderedAutoRegistry();
+        this._pre = new ordered_registry_1.OrderedAutoRegistry();
+        this._post = new ordered_registry_1.OrderedAutoRegistry();
         const r = this._registry, o = createOptions(options);
         this.options = o;
         const add = (listener) => {
@@ -28,16 +33,6 @@ export class EventPublisher {
         event.clear = () => r.clear();
         this._event = Object.freeze(event);
         Object.freeze(this);
-    }
-    addPre(options) {
-        const p = new EventPublisher(options);
-        (this._pre || (this._pre = new OrderedRegistry())).add(p);
-        return p;
-    }
-    addPost(options) {
-        const p = new EventPublisher(options);
-        (this._post || (this._post = new OrderedRegistry())).add(p);
-        return p;
     }
     /**
      * Gets the remaining number of publishes that will emit to listeners.
@@ -66,11 +61,30 @@ export class EventPublisher {
         return this._event;
     }
     /**
+     * Adds an event publisher to be triggered before the event is published.
+     * @param {number | EventPublisherOptions} options
+     * @return {EventPublisher<T>}
+     */
+    addPre(options) {
+        const p = new EventPublisher(options);
+        this._pre.add(p);
+        return p;
+    }
+    /**
+     * Adds an event publisher to be triggered after the event is published.
+     * @param {number | EventPublisherOptions} options
+     * @return {EventPublisher<T>}
+     */
+    addPost(options) {
+        const p = new EventPublisher(options);
+        this._post.add(p);
+        return p;
+    }
+    /**
      * Dispatches payload to listeners.
      * @param payload
      */
     publish(payload) {
-        var _a, _b;
         const _ = this, o = _.options;
         let r = o.remaining;
         if (r === 0)
@@ -82,12 +96,16 @@ export class EventPublisher {
         if (isFinite(r))
             o.remaining = --r;
         try {
-            (_a = _._pre) === null || _a === void 0 ? void 0 : _a.forEach(publish);
+            for (const e of _._pre)
+                publish(e.value);
             if (o.reversePublish)
-                _._registry.forEachReverse(trigger);
+                for (const e of _._registry.reversed)
+                    trigger(e.value);
             else
-                _._registry.forEach(trigger);
-            (_b = _._post) === null || _b === void 0 ? void 0 : _b.forEach(publish);
+                for (const e of _._registry)
+                    trigger(e.value);
+            for (const e of _._post)
+                publish(e.value);
         }
         catch (e) {
             switch (o.errorHandling) {
@@ -113,7 +131,8 @@ export class EventPublisher {
         }
     }
 }
-export default EventPublisher;
+exports.EventPublisher = EventPublisher;
+exports.default = EventPublisher;
 function dummy() {
 }
 function createOptions(options) {
