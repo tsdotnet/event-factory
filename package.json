@@ -1,5 +1,5 @@
 {
-  "name": "event-factory",
+  "name": "@tsdotnet/event-factory",
   "version": "1.0.0-preview",
   "description": "A strongly typed protected event creator/publisher/signaler for use with TypeScript and JavaScript.",
   "author": "electricessence",

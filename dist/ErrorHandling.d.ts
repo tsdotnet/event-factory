@@ -2,6 +2,7 @@
  * @author electricessence / https://github.com/electricessence/
  * Licensing: MIT
  */
+
 /**
  * @packageDocumentation
  * @module event-factory
