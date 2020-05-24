@@ -7,7 +7,6 @@
  * @module event-factory
  */
 import DisposableBase from '@tsdotnet/disposable';
-import ObjectDisposedException from '@tsdotnet/disposable/dist/ObjectDisposedException';
 import ArgumentException from '@tsdotnet/exceptions/dist/ArgumentException';
 import ArgumentNullException from '@tsdotnet/exceptions/dist/ArgumentNullException';
 import InvalidOperationException from '@tsdotnet/exceptions/dist/InvalidOperationException';
@@ -114,9 +113,8 @@ export class EventDispatcher extends DisposableBase {
      * @param payload
      */
     dispatch(payload) {
+        this.throwIfDisposed();
         const reg = this._registry;
-        if (!reg)
-            throw new ObjectDisposedException('EventManager');
         const behavior = this._behavior;
         try {
             if (behavior === null || behavior === void 0 ? void 0 : behavior.reversePublish)
@@ -158,8 +156,7 @@ export class EventDispatcher extends DisposableBase {
      * @return {Subscribe<T>}
      */
     createSubscribe() {
-        if (!this._registry)
-            throw new ObjectDisposedException('EventManager');
+        this.throwIfDisposed();
         return (listener) => {
             const id = this.register(listener);
             if (isNaN(id))

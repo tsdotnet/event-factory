@@ -11,7 +11,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.EventDispatcher = void 0;
 const tslib_1 = require("tslib");
 const disposable_1 = tslib_1.__importDefault(require("@tsdotnet/disposable"));
-const ObjectDisposedException_1 = tslib_1.__importDefault(require("@tsdotnet/disposable/dist/ObjectDisposedException"));
 const ArgumentException_1 = tslib_1.__importDefault(require("@tsdotnet/exceptions/dist/ArgumentException"));
 const ArgumentNullException_1 = tslib_1.__importDefault(require("@tsdotnet/exceptions/dist/ArgumentNullException"));
 const InvalidOperationException_1 = tslib_1.__importDefault(require("@tsdotnet/exceptions/dist/InvalidOperationException"));
@@ -118,9 +117,8 @@ class EventDispatcher extends disposable_1.default {
      * @param payload
      */
     dispatch(payload) {
+        this.throwIfDisposed();
         const reg = this._registry;
-        if (!reg)
-            throw new ObjectDisposedException_1.default('EventManager');
         const behavior = this._behavior;
         try {
             if (behavior === null || behavior === void 0 ? void 0 : behavior.reversePublish)
@@ -162,8 +160,7 @@ class EventDispatcher extends disposable_1.default {
      * @return {Subscribe<T>}
      */
     createSubscribe() {
-        if (!this._registry)
-            throw new ObjectDisposedException_1.default('EventManager');
+        this.throwIfDisposed();
         return (listener) => {
             const id = this.register(listener);
             if (isNaN(id))
