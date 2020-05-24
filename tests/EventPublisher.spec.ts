@@ -12,7 +12,7 @@ describe('EventPublisher', () =>
 		let count = 0;
 		const max = 3;
 		const pub = new EventPublisher<void>(max);
-		pub.event.add(() => ++count);
+		pub.dispatcher.event.add(() => ++count);
 		for(let i = 1; i<=max; i++)
 		{
 			pub.publish();
@@ -31,7 +31,7 @@ describe('EventPublisher', () =>
 		});
 		for(let i = 1; i<=max; i++)
 		{
-			pub.event.add(() => ++count);
+			pub.dispatcher.add(() => ++count);
 			pub.publish();
 			expect(count).equal(i);
 		}
@@ -42,7 +42,7 @@ describe('EventPublisher', () =>
 	function testChildPub(max: number, parent: EventPublisher<void>, child: EventPublisher<void>)
 	{
 		let count = 0;
-		child.event.add(() => ++count);
+		child.dispatcher.add(() => ++count);
 		for(let i = 1; i<=max; i++)
 		{
 			parent.publish();

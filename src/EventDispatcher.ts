@@ -1,8 +1,11 @@
 /*!
  * @author electricessence / https://github.com/electricessence/
- * @license MIT
+ * Licensing: MIT
  */
-
+/**
+ * @packageDocumentation
+ * @module event-factory
+ */
 
 import DisposableBase from '@tsdotnet/disposable';
 import ObjectDisposedException from '@tsdotnet/disposable/dist/ObjectDisposedException';

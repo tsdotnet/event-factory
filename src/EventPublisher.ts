@@ -2,6 +2,10 @@
  * @author electricessence / https://github.com/electricessence/
  * Licensing: MIT
  */
+/**
+ * @packageDocumentation
+ * @module event-factory
+ */
 
 import DisposableBase from '@tsdotnet/disposable';
 import Disposable from '@tsdotnet/disposable/dist/Disposable';
@@ -136,9 +140,10 @@ export default class EventPublisher<T>
 				d    = _._dispatcher.valueReference,
 				pre  = _._pre.valueReference?.map(getValue).toArray(),
 				post = _._post.valueReference?.map(getValue).toArray();
-			if(pre) for(const e of pre) e.publish(payload);
+
+			publish(pre as EventPublisher<T>[], payload);
 			if(d) d.dispatch(payload);
-			if(post) for(const e of post) e.publish(payload);
+			publish(post as EventPublisher<T>[], payload);
 		}
 		catch(e)
 		{
@@ -167,6 +172,11 @@ export default class EventPublisher<T>
 		cleanReg(this._pre.valueReference)?.dispose();
 		cleanReg(this._post.valueReference)?.dispose();
 	}
+}
+
+function publish<T> (p: EventPublisher<T>[] | undefined, payload: T)
+{
+	if(p) for(const e of p) (e as EventPublisher<T>).publish(payload);
 }
 
 function createOptions (options?: EventPublisherOptions | number | null): EventPublisherOptions

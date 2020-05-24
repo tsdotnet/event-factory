@@ -3,36 +3,38 @@
  * @author electricessence / https://github.com/electricessence/
  * Licensing: MIT
  */
+/**
+ * @packageDocumentation
+ * @module event-factory
+ */
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.EventPublisher = void 0;
+const tslib_1 = require("tslib");
+const disposable_1 = tslib_1.__importDefault(require("@tsdotnet/disposable"));
+const lazy_1 = require("@tsdotnet/lazy");
 const ordered_registry_1 = require("@tsdotnet/ordered-registry");
-class EventPublisher {
-    constructor(options) {
-        this._registry = new ordered_registry_1.OrderedAutoRegistry();
-        this._pre = new ordered_registry_1.OrderedAutoRegistry();
-        this._post = new ordered_registry_1.OrderedAutoRegistry();
-        const r = this._registry, o = createOptions(options);
-        this.options = o;
-        const add = (listener) => {
-            const rem = o.remaining;
-            return rem && rem > 0 ? r.add(listener) : NaN;
-        };
-        const remove = (id) => r.remove(id);
-        const event = (listener) => {
-            const id = add(listener);
-            return isNaN(id) ? dummy : () => {
-                remove(id);
-            };
-        };
-        event.add = add;
-        event.remove = remove;
-        event.register = (listener) => {
-            const rem = o.remaining;
-            return rem && rem > 0 ? r.register(listener) : NaN;
-        };
-        event.clear = () => r.clear();
-        this._event = Object.freeze(event);
+const EventDispatcher_1 = require("./EventDispatcher");
+class EventPublisher extends disposable_1.default {
+    constructor(options, finalizer) {
+        super('EventPublisher', finalizer);
+        this._pre = lazy_1.Lazy.create(() => new ordered_registry_1.OrderedAutoRegistry());
+        this._dispatcher = lazy_1.Lazy.create(() => new EventDispatcher_1.EventDispatcher(this.options));
+        this._post = lazy_1.Lazy.create(() => new ordered_registry_1.OrderedAutoRegistry());
+        this.options = createOptions(options);
         Object.freeze(this);
+    }
+    /**
+     * Sets the remaining number of publishes that will emit to listeners.
+     * A value of zero will clear all listeners.
+     * @param value
+     */
+    set remaining(value) {
+        var _a;
+        if (isNaN(value))
+            return;
+        this.throwIfDisposed('Updating remaining for disposed publisher.');
+        this.options.remaining = value;
+        if (!value)
+            (_a = this._dispatcher.valueReference) === null || _a === void 0 ? void 0 : _a.clear();
     }
     /**
      * Gets the remaining number of publishes that will emit to listeners.
@@ -43,48 +45,37 @@ class EventPublisher {
         return typeof rem == 'number' ? rem : Number.POSITIVE_INFINITY;
     }
     /**
-     * Sets the remaining number of publishes that will emit to listeners.
-     * A value of zero will clear all listeners.
-     * @param value
+     * The event dispatcher.
      */
-    set remaining(value) {
-        if (isNaN(value))
-            return;
-        this.options.remaining = value;
-        if (!value)
-            this._registry.clear();
-    }
-    /**
-     * The event object to subscribe to.
-     */
-    get event() {
-        return this._event;
+    get dispatcher() {
+        return this._dispatcher.value;
     }
     /**
      * Adds an event publisher to be triggered before the event is published.
+     * Disposing the returned `EventPublisher<T>` removes it from it's parent (this).
      * @param {number | EventPublisherOptions} options
      * @return {EventPublisher<T>}
      */
     addPre(options) {
-        const p = new EventPublisher(options);
-        this._pre.add(p);
-        return p;
+        this.throwIfDisposed();
+        return addPub(this._pre.value, options);
     }
     /**
      * Adds an event publisher to be triggered after the event is published.
+     * Disposing the returned `EventPublisher<T>` removes it from it's parent (this).
      * @param {number | EventPublisherOptions} options
      * @return {EventPublisher<T>}
      */
     addPost(options) {
-        const p = new EventPublisher(options);
-        this._post.add(p);
-        return p;
+        this.throwIfDisposed();
+        return addPub(this._post.value, options);
     }
     /**
      * Dispatches payload to listeners.
      * @param payload
      */
     publish(payload) {
+        var _a, _b, _c;
         const _ = this, o = _.options;
         let r = o.remaining;
         if (r === 0)
@@ -96,16 +87,11 @@ class EventPublisher {
         if (isFinite(r))
             o.remaining = --r;
         try {
-            for (const e of _._pre)
-                publish(e.value);
-            if (o.reversePublish)
-                for (const e of _._registry.reversed)
-                    trigger(e.value);
-            else
-                for (const e of _._registry)
-                    trigger(e.value);
-            for (const e of _._post)
-                publish(e.value);
+            const d = _._dispatcher.valueReference, pre = (_a = _._pre.valueReference) === null || _a === void 0 ? void 0 : _a.map(getValue).toArray(), post = (_b = _._post.valueReference) === null || _b === void 0 ? void 0 : _b.map(getValue).toArray();
+            publish(pre, payload);
+            if (d)
+                d.dispatch(payload);
+            publish(post, payload);
         }
         catch (e) {
             switch (o.errorHandling) {
@@ -120,20 +106,23 @@ class EventPublisher {
         }
         finally {
             if (r == 0 || o.clearListenersAfterPublish)
-                _._registry.clear();
-        }
-        // abstract away ids.
-        function trigger(listener) {
-            listener(payload);
-        }
-        function publish(p) {
-            p.publish(payload);
+                (_c = _._dispatcher.valueReference) === null || _c === void 0 ? void 0 : _c.clear();
         }
     }
+    _onDispose() {
+        var _a, _b, _c;
+        const d = this._dispatcher;
+        (_a = d.valueReference) === null || _a === void 0 ? void 0 : _a.dispose();
+        d.dispose();
+        (_b = cleanReg(this._pre.valueReference)) === null || _b === void 0 ? void 0 : _b.dispose();
+        (_c = cleanReg(this._post.valueReference)) === null || _c === void 0 ? void 0 : _c.dispose();
+    }
 }
-exports.EventPublisher = EventPublisher;
 exports.default = EventPublisher;
-function dummy() {
+function publish(p, payload) {
+    if (p)
+        for (const e of p)
+            e.publish(payload);
 }
 function createOptions(options) {
     return typeof options == 'number' ? { remaining: options } : !options ? {} : {
@@ -142,5 +131,22 @@ function createOptions(options) {
         clearListenersAfterPublish: options.clearListenersAfterPublish,
         remaining: options.remaining
     };
+}
+function addPub(reg, options) {
+    let id = 0;
+    const p = new EventPublisher(options, () => reg.remove(id));
+    id = reg.add(p);
+    return p;
+}
+function cleanReg(reg) {
+    if (!reg)
+        return reg;
+    for (const r of reg.toArray())
+        r.value.dispose();
+    reg.clear();
+    return reg;
+}
+function getValue(e) {
+    return e.value;
 }
 //# sourceMappingURL=EventPublisher.js.map

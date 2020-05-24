@@ -1,0 +1,1 @@
+{"version":3,"file":"eventFactory.js","sourceRoot":"","sources":["../src/eventFactory.ts"],"names":[],"mappings":"AAAA;;;;;;GAMG;AAEH,OAAO,cAAc,MAAM,kBAAkB,CAAC;AAI9C,OAAO,EAAC,eAAe,EAAC,MAAM,mBAAmB,CAAC;AAIlD,MAAM,CAAC,OAAO,UAAU,YAAY,CACnC,OAA+C,EAC/C,SAAsB;IACtB,OAAO,IAAI,cAAc,CAAC,OAAO,EAAE,SAAS,CAAC,CAAC;AAC/C,CAAC"}

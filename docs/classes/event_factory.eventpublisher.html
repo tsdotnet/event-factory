@@ -1,0 +1,1029 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta content="IE=edge" http-equiv="X-UA-Compatible">
+	<title>EventPublisher | event-factory - v1.0.0-preview</title>
+	<meta content="Documentation for event-factory - v1.0.0-preview" name="description">
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+	<link href="../assets/css/main.css" rel="stylesheet">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" data-base=".." data-index="../assets/js/search.json" id="tsd-search">
+					<div class="field">
+						<label class="tsd-widget search no-caption" for="tsd-search-field">Search</label>
+						<input id="tsd-search-field" type="text"/>
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a class="title" href="../index.html">event-factory - v1.0.0-preview</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a class="tsd-widget options no-caption" data-toggle="options" href="#">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li class="selected" data-value="private">All</li>
+								</ul>
+							</div>
+							<input checked id="tsd-filter-inherited" type="checkbox"/>
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+						</div>
+					</div>
+					<a class="tsd-widget menu no-caption" data-toggle="menu" href="#">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../index.html">Globals</a>
+				</li>
+				<li>
+					<a href="../modules/event_factory.html">event-factory</a>
+				</li>
+				<li>
+					<a href="event_factory.eventpublisher.html">EventPublisher</a>
+				</li>
+			</ul>
+			<h1>Class EventPublisher&lt;T&gt;</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-type-parameters">
+				<h3>Type parameters</h3>
+				<ul class="tsd-type-parameters">
+					<li>
+						<h4>T</h4>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<span class="tsd-signature-type">DisposableBase</span>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">EventPublisher</span>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel">
+				<h3>Implements</h3>
+				<ul class="tsd-hierarchy">
+					<li><span class="tsd-signature-type">DisposableAware</span></li>
+				</ul>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Constructors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a
+										class="tsd-kind-icon" href="event_factory.eventpublisher.html#constructor">constructor</a>
+								</li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a
+										class="tsd-kind-icon" href="event_factory.eventpublisher.html#_dispatcher">_dispatcher</a>
+								</li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a
+										class="tsd-kind-icon"
+										href="event_factory.eventpublisher.html#_disposableobjectname">_disposable
+									<wbr>
+									Object
+									<wbr>
+									Name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a
+										class="tsd-kind-icon" href="event_factory.eventpublisher.html#_post">_post</a>
+								</li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a
+										class="tsd-kind-icon" href="event_factory.eventpublisher.html#_pre">_pre</a>
+								</li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a class="tsd-kind-icon"
+								                                                       href="event_factory.eventpublisher.html#options">options</a>
+								</li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Accessors</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a class="tsd-kind-icon"
+								                                                            href="event_factory.eventpublisher.html#dispatcher">dispatcher</a>
+								</li>
+								<li class="tsd-kind-accessor tsd-parent-kind-class"><a class="tsd-kind-icon"
+								                                                       href="event_factory.eventpublisher.html#remaining">remaining</a>
+								</li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited"><a
+										class="tsd-kind-icon" href="event_factory.eventpublisher.html#wasdisposed">was
+									<wbr>
+									Disposed</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-protected"><a
+										class="tsd-kind-icon" href="event_factory.eventpublisher.html#_ondispose">_on
+									<wbr>
+									Dispose</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a class="tsd-kind-icon"
+								                                                     href="event_factory.eventpublisher.html#addpost">add
+									<wbr>
+									Post</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a class="tsd-kind-icon"
+								                                                     href="event_factory.eventpublisher.html#addpre">add
+									<wbr>
+									Pre</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a
+										class="tsd-kind-icon"
+										href="event_factory.eventpublisher.html#dispose">dispose</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a class="tsd-kind-icon"
+								                                                     href="event_factory.eventpublisher.html#publish">publish</a>
+								</li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a
+										class="tsd-kind-icon" href="event_factory.eventpublisher.html#throwifdisposed">throw
+									<wbr>
+									IfDisposed</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Constructors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+					<a class="tsd-anchor" name="constructor"></a>
+					<h3>constructor</h3>
+					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">new
+							<wbr>
+							Event
+							<wbr>
+							Publisher<span class="tsd-signature-symbol">(</span>remaining<span
+									class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>,
+							finalizer<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span
+									class="tsd-signature-symbol"> | </span><span
+									class="tsd-signature-symbol">(</span><span
+									class="tsd-signature-symbol">(</span><span
+									class="tsd-signature-symbol">)</span><span
+									class="tsd-signature-symbol"> =&gt; </span><span
+									class="tsd-signature-type">void</span><span
+									class="tsd-signature-symbol">)</span><span
+									class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a
+									class="tsd-signature-type"
+									href="event_factory.eventpublisher.html">EventPublisher</a></li>
+						<li class="tsd-signature tsd-kind-icon">new
+							<wbr>
+							Event
+							<wbr>
+							Publisher<span class="tsd-signature-symbol">(</span>options<span
+									class="tsd-signature-symbol">?: </span><a class="tsd-signature-type"
+							                                                  href="../interfaces/event_factory.eventpublisheroptions.html">EventPublisherOptions</a><span
+									class="tsd-signature-symbol"> | </span><span
+									class="tsd-signature-type">number</span><span
+									class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span>,
+							finalizer<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span
+									class="tsd-signature-symbol"> | </span><span
+									class="tsd-signature-symbol">(</span><span
+									class="tsd-signature-symbol">(</span><span
+									class="tsd-signature-symbol">)</span><span
+									class="tsd-signature-symbol"> =&gt; </span><span
+									class="tsd-signature-type">void</span><span
+									class="tsd-signature-symbol">)</span><span
+									class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a
+									class="tsd-signature-type"
+									href="event_factory.eventpublisher.html">EventPublisher</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Overrides DisposableBase.__constructor</p>
+								<ul>
+									<li>Defined in <a
+											href="https://github.com/tsdotnet/event-factory/blob/d54d71e/src/EventPublisher.ts#L24">src/EventPublisher.ts:24</a>
+									</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>remaining: <span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> finalizer: <span
+											class="tsd-signature-type">undefined</span><span
+											class="tsd-signature-symbol"> | </span><span
+											class="tsd-signature-symbol">(</span><span
+											class="tsd-signature-symbol">(</span><span
+											class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span
+											class="tsd-signature-type">void</span><span
+											class="tsd-signature-symbol">)</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a class="tsd-signature-type"
+							                                         href="event_factory.eventpublisher.html">EventPublisher</a>
+							</h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Overrides DisposableBase.__constructor</p>
+								<ul>
+									<li>Defined in <a
+											href="https://github.com/tsdotnet/event-factory/blob/d54d71e/src/EventPublisher.ts#L26">src/EventPublisher.ts:26</a>
+									</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a
+											class="tsd-signature-type"
+											href="../interfaces/event_factory.eventpublisheroptions.html">EventPublisherOptions</a><span
+											class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span
+											class="tsd-signature-symbol"> | </span><span
+											class="tsd-signature-type">null</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> finalizer: <span
+											class="tsd-signature-type">undefined</span><span
+											class="tsd-signature-symbol"> | </span><span
+											class="tsd-signature-symbol">(</span><span
+											class="tsd-signature-symbol">(</span><span
+											class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span
+											class="tsd-signature-type">void</span><span
+											class="tsd-signature-symbol">)</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a class="tsd-signature-type"
+							                                         href="event_factory.eventpublisher.html">EventPublisher</a>
+							</h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+					<a class="tsd-anchor" name="_dispatcher"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> <span class="tsd-flag ts-flagReadonly">Readonly</span>
+						_dispatcher</h3>
+					<div class="tsd-signature tsd-kind-icon">_dispatcher<span class="tsd-signature-symbol">:</span>
+						<span class="tsd-signature-type">Lazy</span><span class="tsd-signature-symbol">&lt;</span><a
+								class="tsd-signature-type" href="event_factory.eventdispatcher.html">EventDispatcher</a><span
+								class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span
+								class="tsd-signature-symbol">&gt;</span><span
+								class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = Lazy.create(() &#x3D;&gt; new EventDispatcher&lt;T&gt;(this.options))</span>
+					</div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a
+									href="https://github.com/tsdotnet/event-factory/blob/d54d71e/src/EventPublisher.ts#L23">src/EventPublisher.ts:23</a>
+							</li>
+						</ul>
+					</aside>
+				</section>
+				<section
+						class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+					<a class="tsd-anchor" name="_disposableobjectname"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> _disposable
+						<wbr>
+						Object
+						<wbr>
+						Name
+					</h3>
+					<div class="tsd-signature tsd-kind-icon">_disposable
+						<wbr>
+						Object
+						<wbr>
+						Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span>
+					</div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="event_factory.eventdispatcher.html">EventDispatcher</a>.<a
+								href="event_factory.eventdispatcher.html#_disposableobjectname">_disposableObjectName</a>
+						</p>
+						<ul>
+							<li>Defined in
+								node_modules/.pnpm/registry.npmjs.org/@tsdotnet/disposable/1.1.19/node_modules/@tsdotnet/disposable/dist/DisposableBase.d.ts:7
+							</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+					<a class="tsd-anchor" name="_post"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> <span class="tsd-flag ts-flagReadonly">Readonly</span>
+						_post</h3>
+					<div class="tsd-signature tsd-kind-icon">_post<span class="tsd-signature-symbol">:</span> <span
+							class="tsd-signature-type">Lazy</span><span class="tsd-signature-symbol">&lt;</span><span
+							class="tsd-signature-type">OrderedAutoRegistry</span><span
+							class="tsd-signature-symbol">&lt;</span><a class="tsd-signature-type"
+					                                                   href="event_factory.eventpublisher.html">EventPublisher</a><span
+							class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span
+							class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span
+							class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = Lazy.create(() &#x3D;&gt; new OrderedAutoRegistry&lt;EventPublisher&lt;T&gt;&gt;())</span>
+					</div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a
+									href="https://github.com/tsdotnet/event-factory/blob/d54d71e/src/EventPublisher.ts#L24">src/EventPublisher.ts:24</a>
+							</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+					<a class="tsd-anchor" name="_pre"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> <span class="tsd-flag ts-flagReadonly">Readonly</span>
+						_pre</h3>
+					<div class="tsd-signature tsd-kind-icon">_pre<span class="tsd-signature-symbol">:</span> <span
+							class="tsd-signature-type">Lazy</span><span class="tsd-signature-symbol">&lt;</span><span
+							class="tsd-signature-type">OrderedAutoRegistry</span><span
+							class="tsd-signature-symbol">&lt;</span><a class="tsd-signature-type"
+					                                                   href="event_factory.eventpublisher.html">EventPublisher</a><span
+							class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span
+							class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span
+							class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = Lazy.create(() &#x3D;&gt; new OrderedAutoRegistry&lt;EventPublisher&lt;T&gt;&gt;())</span>
+					</div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a
+									href="https://github.com/tsdotnet/event-factory/blob/d54d71e/src/EventPublisher.ts#L22">src/EventPublisher.ts:22</a>
+							</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a class="tsd-anchor" name="options"></a>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> options</h3>
+					<div class="tsd-signature tsd-kind-icon">options<span class="tsd-signature-symbol">:</span> <a
+							class="tsd-signature-type" href="../interfaces/event_factory.eventpublisheroptions.html">EventPublisherOptions</a>
+					</div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a
+									href="https://github.com/tsdotnet/event-factory/blob/d54d71e/src/EventPublisher.ts#L21">src/EventPublisher.ts:21</a>
+							</li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Accessors</h2>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
+					<a class="tsd-anchor" name="dispatcher"></a>
+					<h3>dispatcher</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> dispatcher<span
+								class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span
+								class="tsd-signature-symbol">: </span><a class="tsd-signature-type"
+						                                                 href="event_factory.eventdispatcher.html">EventDispatcher</a><span
+								class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span
+								class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a
+											href="https://github.com/tsdotnet/event-factory/blob/d54d71e/src/EventPublisher.ts#L62">src/EventPublisher.ts:62</a>
+									</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>The event dispatcher.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <a class="tsd-signature-type"
+							                                         href="event_factory.eventdispatcher.html">EventDispatcher</a><span
+									class="tsd-signature-symbol">&lt;</span><span
+									class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>
+							</h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class">
+					<a class="tsd-anchor" name="remaining"></a>
+					<h3>remaining</h3>
+					<ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span>
+							remaining<span class="tsd-signature-symbol">(</span><span
+									class="tsd-signature-symbol">)</span><span
+									class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>
+						</li>
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span>
+							remaining<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span
+									class="tsd-signature-type">number</span><span
+									class="tsd-signature-symbol">)</span><span
+									class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>
+						</li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a
+											href="https://github.com/tsdotnet/event-factory/blob/d54d71e/src/EventPublisher.ts#L53">src/EventPublisher.ts:53</a>
+									</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Gets the remaining number of publishes that will emit to listeners.
+										When this number is zero all listeners are cleared and none can be added.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a
+											href="https://github.com/tsdotnet/event-factory/blob/d54d71e/src/EventPublisher.ts#L40">src/EventPublisher.ts:40</a>
+									</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Sets the remaining number of publishes that will emit to listeners.
+										A value of zero will clear all listeners.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>value: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+					<a class="tsd-anchor" name="wasdisposed"></a>
+					<h3>was
+						<wbr>
+						Disposed
+					</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span>
+							wasDisposed<span class="tsd-signature-symbol">(</span><span
+									class="tsd-signature-symbol">)</span><span
+									class="tsd-signature-symbol">: </span><span
+									class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="event_factory.eventdispatcher.html">EventDispatcher</a>.<a
+										href="event_factory.eventdispatcher.html#wasdisposed">wasDisposed</a></p>
+								<ul>
+									<li>Defined in
+										node_modules/.pnpm/registry.npmjs.org/@tsdotnet/disposable/1.1.19/node_modules/@tsdotnet/disposable/dist/DisposableBase.d.ts:10
+									</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section
+						class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-protected">
+					<a class="tsd-anchor" name="_ondispose"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> _on
+						<wbr>
+						Dispose
+					</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-protected">
+						<li class="tsd-signature tsd-kind-icon">_on
+							<wbr>
+							Dispose<span class="tsd-signature-symbol">(</span><span
+									class="tsd-signature-symbol">)</span><span
+									class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>
+						</li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Overrides DisposableBase._onDispose</p>
+								<ul>
+									<li>Defined in <a
+											href="https://github.com/tsdotnet/event-factory/blob/d54d71e/src/EventPublisher.ts#L167">src/EventPublisher.ts:167</a>
+									</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a class="tsd-anchor" name="addpost"></a>
+					<h3>add
+						<wbr>
+						Post
+					</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">add
+							<wbr>
+							Post<span class="tsd-signature-symbol">(</span>remaining<span
+									class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span
+									class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a
+									class="tsd-signature-type"
+									href="event_factory.eventpublisher.html">EventPublisher</a><span
+									class="tsd-signature-symbol">&lt;</span><span
+									class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>
+						</li>
+						<li class="tsd-signature tsd-kind-icon">add
+							<wbr>
+							Post<span class="tsd-signature-symbol">(</span>options<span
+									class="tsd-signature-symbol">?: </span><a class="tsd-signature-type"
+							                                                  href="../interfaces/event_factory.eventpublisheroptions.html">EventPublisherOptions</a><span
+									class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a
+									class="tsd-signature-type"
+									href="event_factory.eventpublisher.html">EventPublisher</a><span
+									class="tsd-signature-symbol">&lt;</span><span
+									class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>
+						</li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a
+											href="https://github.com/tsdotnet/event-factory/blob/d54d71e/src/EventPublisher.ts#L101">src/EventPublisher.ts:101</a>
+									</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Adds an event publisher to be triggered after the event is published.
+										Disposing the returned <code>EventPublisher&lt;T&gt;</code> removes it from it&#39;s
+										parent (this).</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>remaining: <span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a class="tsd-signature-type"
+							                                         href="event_factory.eventpublisher.html">EventPublisher</a><span
+									class="tsd-signature-symbol">&lt;</span><span
+									class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>
+							</h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a
+											href="https://github.com/tsdotnet/event-factory/blob/d54d71e/src/EventPublisher.ts#L109">src/EventPublisher.ts:109</a>
+									</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Adds an event publisher to be triggered after the event is published.
+										Disposing the returned <code>EventPublisher&lt;T&gt;</code> removes it from it&#39;s
+										parent (this).</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a
+											class="tsd-signature-type"
+											href="../interfaces/event_factory.eventpublisheroptions.html">EventPublisherOptions</a>
+									</h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a class="tsd-signature-type"
+							                                         href="event_factory.eventpublisher.html">EventPublisher</a><span
+									class="tsd-signature-symbol">&lt;</span><span
+									class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>
+							</h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a class="tsd-anchor" name="addpre"></a>
+					<h3>add
+						<wbr>
+						Pre
+					</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">add
+							<wbr>
+							Pre<span class="tsd-signature-symbol">(</span>remaining<span
+									class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span
+									class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a
+									class="tsd-signature-type"
+									href="event_factory.eventpublisher.html">EventPublisher</a><span
+									class="tsd-signature-symbol">&lt;</span><span
+									class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>
+						</li>
+						<li class="tsd-signature tsd-kind-icon">add
+							<wbr>
+							Pre<span class="tsd-signature-symbol">(</span>options<span
+									class="tsd-signature-symbol">?: </span><a class="tsd-signature-type"
+							                                                  href="../interfaces/event_factory.eventpublisheroptions.html">EventPublisherOptions</a><span
+									class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a
+									class="tsd-signature-type"
+									href="event_factory.eventpublisher.html">EventPublisher</a><span
+									class="tsd-signature-symbol">&lt;</span><span
+									class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>
+						</li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a
+											href="https://github.com/tsdotnet/event-factory/blob/d54d71e/src/EventPublisher.ts#L73">src/EventPublisher.ts:73</a>
+									</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Adds an event publisher to be triggered before the event is published.
+										Disposing the returned <code>EventPublisher&lt;T&gt;</code> removes it from it&#39;s
+										parent (this).</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>remaining: <span class="tsd-signature-type">number</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a class="tsd-signature-type"
+							                                         href="event_factory.eventpublisher.html">EventPublisher</a><span
+									class="tsd-signature-symbol">&lt;</span><span
+									class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>
+							</h4>
+						</li>
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a
+											href="https://github.com/tsdotnet/event-factory/blob/d54d71e/src/EventPublisher.ts#L81">src/EventPublisher.ts:81</a>
+									</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Adds an event publisher to be triggered before the event is published.
+										Disposing the returned <code>EventPublisher&lt;T&gt;</code> removes it from it&#39;s
+										parent (this).</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <a
+											class="tsd-signature-type"
+											href="../interfaces/event_factory.eventpublisheroptions.html">EventPublisherOptions</a>
+									</h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a class="tsd-signature-type"
+							                                         href="event_factory.eventpublisher.html">EventPublisher</a><span
+									class="tsd-signature-symbol">&lt;</span><span
+									class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>
+							</h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a class="tsd-anchor" name="dispose"></a>
+					<h3>dispose</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">dispose<span class="tsd-signature-symbol">(</span><span
+								class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span
+								class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="event_factory.eventdispatcher.html">EventDispatcher</a>.<a
+										href="event_factory.eventdispatcher.html#dispose">dispose</a></p>
+								<ul>
+									<li>Defined in
+										node_modules/.pnpm/registry.npmjs.org/@tsdotnet/disposable/1.1.19/node_modules/@tsdotnet/disposable/dist/DisposableBase.d.ts:11
+									</li>
+								</ul>
+							</aside>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a class="tsd-anchor" name="publish"></a>
+					<h3>publish</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">publish<span class="tsd-signature-symbol">(</span>payload<span
+								class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span
+								class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span
+								class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a
+											href="https://github.com/tsdotnet/event-factory/blob/d54d71e/src/EventPublisher.ts#L127">src/EventPublisher.ts:127</a>
+									</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Dispatches payload to listeners.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>payload: <span class="tsd-signature-type">T</span></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section
+						class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+					<a class="tsd-anchor" name="throwifdisposed"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> throw
+						<wbr>
+						IfDisposed
+					</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+						<li class="tsd-signature tsd-kind-icon">throw
+							<wbr>
+							IfDisposed<span class="tsd-signature-symbol">(</span>message<span
+									class="tsd-signature-symbol">?: </span><span
+									class="tsd-signature-type">undefined</span><span
+									class="tsd-signature-symbol"> | </span><span
+									class="tsd-signature-type">string</span>, objectName<span
+									class="tsd-signature-symbol">?: </span><span
+									class="tsd-signature-type">undefined</span><span
+									class="tsd-signature-symbol"> | </span><span
+									class="tsd-signature-type">string</span><span
+									class="tsd-signature-symbol">)</span><span
+									class="tsd-signature-symbol">: </span><span
+									class="tsd-signature-type">true</span><span
+									class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">never</span>
+						</li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="event_factory.eventdispatcher.html">EventDispatcher</a>.<a
+										href="event_factory.eventdispatcher.html#throwifdisposed">throwIfDisposed</a>
+								</p>
+								<ul>
+									<li>Defined in
+										node_modules/.pnpm/registry.npmjs.org/@tsdotnet/disposable/1.1.19/node_modules/@tsdotnet/disposable/dist/DisposableBase.d.ts:17
+									</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Utility for throwing exception when this object is accessed.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> message: <span
+											class="tsd-signature-type">undefined</span><span
+											class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span>
+									</h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> objectName: <span
+											class="tsd-signature-type">undefined</span><span
+											class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span>
+									</h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Optional object name override.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">true</span><span
+									class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">never</span>
+							</h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="../index.html"><em>Globals</em></a>
+					</li>
+					<li class="current tsd-kind-module">
+						<a href="../modules/event_factory.html">event-
+							<wbr>
+							factory</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-enum tsd-parent-kind-module">
+						<a class="tsd-kind-icon" href="../enums/event_factory.errorhandling.html">Error
+							<wbr>
+							Handling</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
+						<a class="tsd-kind-icon" href="event_factory.eventdispatcher.html">Event
+							<wbr>
+							Dispatcher</a>
+					</li>
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
+						<a class="tsd-kind-icon" href="event_factory.eventpublisher.html">Event
+							<wbr>
+							Publisher</a>
+						<ul>
+							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
+								<a class="tsd-kind-icon" href="event_factory.eventpublisher.html#constructor">constructor</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+								<a class="tsd-kind-icon" href="event_factory.eventpublisher.html#_dispatcher">_dispatcher</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+								<a class="tsd-kind-icon" href="event_factory.eventpublisher.html#_disposableobjectname">_disposable
+									<wbr>
+									Object
+									<wbr>
+									Name</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+								<a class="tsd-kind-icon" href="event_factory.eventpublisher.html#_post">_post</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+								<a class="tsd-kind-icon" href="event_factory.eventpublisher.html#_pre">_pre</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class">
+								<a class="tsd-kind-icon" href="event_factory.eventpublisher.html#options">options</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
+								<a class="tsd-kind-icon"
+								   href="event_factory.eventpublisher.html#dispatcher">dispatcher</a>
+							</li>
+							<li class=" tsd-kind-accessor tsd-parent-kind-class">
+								<a class="tsd-kind-icon"
+								   href="event_factory.eventpublisher.html#remaining">remaining</a>
+							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
+								<a class="tsd-kind-icon" href="event_factory.eventpublisher.html#wasdisposed">was
+									<wbr>
+									Disposed</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite tsd-is-protected">
+								<a class="tsd-kind-icon" href="event_factory.eventpublisher.html#_ondispose">_on
+									<wbr>
+									Dispose</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a class="tsd-kind-icon" href="event_factory.eventpublisher.html#addpost">add
+									<wbr>
+									Post</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a class="tsd-kind-icon" href="event_factory.eventpublisher.html#addpre">add
+									<wbr>
+									Pre</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a class="tsd-kind-icon" href="event_factory.eventpublisher.html#dispose">dispose</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a class="tsd-kind-icon" href="event_factory.eventpublisher.html#publish">publish</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+								<a class="tsd-kind-icon" href="event_factory.eventpublisher.html#throwifdisposed">throw
+									<wbr>
+									IfDisposed</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a class="tsd-kind-icon" href="../interfaces/event_factory.eventdispatchbehavior.html">Event
+							<wbr>
+							Dispatch
+							<wbr>
+							Behavior</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a class="tsd-kind-icon" href="../interfaces/event_factory.eventpublisheroptions.html">Event
+							<wbr>
+							Publisher
+							<wbr>
+							Options</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
+						<a class="tsd-kind-icon" href="../interfaces/event_factory.eventregistry.html">Event
+							<wbr>
+							Registry</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+						<a class="tsd-kind-icon" href="../modules/event_factory.html#event">Event</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+						<a class="tsd-kind-icon" href="../modules/event_factory.html#listener">Listener</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+						<a class="tsd-kind-icon" href="../modules/event_factory.html#subscribe">Subscribe</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a class="tsd-kind-icon" href="../modules/event_factory.html#unsubscribe">Unsubscribe</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class tsd-has-type-parameter"><span
+						class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span>
+				</li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span>
+				</li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span>
+				</li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span>
+				</li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span>
+				</li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span>
+				</li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+<script>if(location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>
