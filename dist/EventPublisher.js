@@ -87,7 +87,7 @@ class EventPublisher extends disposable_1.default {
         if (isFinite(r))
             o.remaining = --r;
         try {
-            const d = _._dispatcher.valueReference, pre = (_a = _._pre.valueReference) === null || _a === void 0 ? void 0 : _a.map(getValue).toArray(), post = (_b = _._post.valueReference) === null || _b === void 0 ? void 0 : _b.map(getValue).toArray();
+            const d = _._dispatcher.valueReference, pre = (_a = _._pre.valueReference) === null || _a === void 0 ? void 0 : _a.values.toArray(), post = (_b = _._post.valueReference) === null || _b === void 0 ? void 0 : _b.values.toArray();
             publish(pre, payload);
             if (d)
                 d.dispatch(payload);
@@ -145,8 +145,5 @@ function cleanReg(reg) {
         r.value.dispose();
     reg.clear();
     return reg;
-}
-function getValue(e) {
-    return e.value;
 }
 //# sourceMappingURL=EventPublisher.js.map

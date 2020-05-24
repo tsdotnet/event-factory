@@ -38,7 +38,7 @@ export class EventDispatcher<T>
 
 	constructor (behavior?: EventDispatchBehavior, finalizer?: () => void)
 	{
-		super('EventManager', finalizer);
+		super('EventDispatcher', finalizer);
 		this._behavior = Object.freeze({
 			reversePublish: behavior?.reversePublish==true,
 			errorHandling: behavior?.errorHandling || ErrorHandling.Throw,
@@ -138,7 +138,7 @@ export class EventDispatcher<T>
 		try
 		{
 			if(behavior?.reversePublish) for(const e of reg.reversed.toArray()) trigger(e.value);
-			else for(const e of reg.toArray()) trigger(e.value);
+			else for(const e of reg.values.toArray()) trigger(e);
 		}
 		catch(e)
 		{

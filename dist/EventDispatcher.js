@@ -19,7 +19,7 @@ const ordered_registry_1 = require("@tsdotnet/ordered-registry");
 const LISTENER = 'listener';
 class EventDispatcher extends disposable_1.default {
     constructor(behavior, finalizer) {
-        super('EventManager', finalizer);
+        super('EventDispatcher', finalizer);
         this._publicSubscribe = lazy_1.Lazy.create(() => Object.freeze(this.createSubscribe()));
         this._publicEvent = lazy_1.Lazy.create(() => {
             const sub = this.createSubscribe();
@@ -125,8 +125,8 @@ class EventDispatcher extends disposable_1.default {
                 for (const e of reg.reversed.toArray())
                     trigger(e.value);
             else
-                for (const e of reg.toArray())
-                    trigger(e.value);
+                for (const e of reg.values.toArray())
+                    trigger(e);
         }
         catch (e) {
             switch (behavior === null || behavior === void 0 ? void 0 : behavior.errorHandling) {

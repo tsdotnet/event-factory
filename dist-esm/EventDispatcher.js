@@ -15,7 +15,7 @@ import { OrderedAutoRegistry } from '@tsdotnet/ordered-registry';
 const LISTENER = 'listener';
 export class EventDispatcher extends DisposableBase {
     constructor(behavior, finalizer) {
-        super('EventManager', finalizer);
+        super('EventDispatcher', finalizer);
         this._publicSubscribe = Lazy.create(() => Object.freeze(this.createSubscribe()));
         this._publicEvent = Lazy.create(() => {
             const sub = this.createSubscribe();
@@ -121,8 +121,8 @@ export class EventDispatcher extends DisposableBase {
                 for (const e of reg.reversed.toArray())
                     trigger(e.value);
             else
-                for (const e of reg.toArray())
-                    trigger(e.value);
+                for (const e of reg.values.toArray())
+                    trigger(e);
         }
         catch (e) {
             switch (behavior === null || behavior === void 0 ? void 0 : behavior.errorHandling) {

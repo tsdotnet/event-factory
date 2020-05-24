@@ -138,8 +138,8 @@ export default class EventPublisher<T>
 		{
 			const
 				d    = _._dispatcher.valueReference,
-				pre  = _._pre.valueReference?.map(getValue).toArray(),
-				post = _._post.valueReference?.map(getValue).toArray();
+				pre  = _._pre.valueReference?.values.toArray(),
+				post = _._post.valueReference?.values.toArray();
 
 			publish(pre as EventPublisher<T>[], payload);
 			if(d) d.dispatch(payload);
@@ -205,9 +205,4 @@ function cleanReg<TDisposable extends Disposable> (reg?: OrderedAutoRegistry<TDi
 	for(const r of reg.toArray()) r.value.dispose();
 	reg.clear();
 	return reg;
-}
-
-function getValue<TValue> (e: { value: TValue }): TValue
-{
-	return e.value;
 }
