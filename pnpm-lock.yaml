@@ -1,5 +1,8 @@
 dependencies:
   '@tsdotnet/collection-base': 2.0.4
+  '@tsdotnet/disposable': 1.1.19
+  '@tsdotnet/exceptions': 1.0.16
+  '@tsdotnet/lazy': 1.0.19
   '@tsdotnet/ordered-registry': 1.0.12
   tslib: 2.0.0
 devDependencies:
@@ -225,12 +228,25 @@ packages:
     dev: false
     resolution:
       integrity: sha512-7cPmEDQ0v/k3CHSnvMOYf9xLgWX96JIdMpDnonvIl3y/0sAexQDtRSKxLki2l/iBgsL/npGwLDBn/wmZGxz2Tg==
+  /@tsdotnet/disposable/1.1.19:
+    dependencies:
+      tslib: 2.0.0
+    dev: false
+    resolution:
+      integrity: sha512-2DGtUvkiR1/h2mmES97BLb2zBgRaYQbUnk/YcYG5rmdKjHgZVKcPwd+exMZTxY5mLi4mQCbsS/BmSxEKqg2Uag==
   /@tsdotnet/exceptions/1.0.16:
     dependencies:
       tslib: 2.0.0
     dev: false
     resolution:
       integrity: sha512-uJwSxVgTVmNOSvit1TFLgFass/VGEyEDRx8zvgtC3YaAj/KCQi1wE/uchBIFaXCWYSmOELHZjDZRv4zYguVqTQ==
+  /@tsdotnet/lazy/1.0.19:
+    dependencies:
+      '@tsdotnet/disposable': 1.1.19
+      tslib: 2.0.0
+    dev: false
+    resolution:
+      integrity: sha512-755p0CDhfwnBViO8i7SOp6vbflZ9ip4B8ULRGz6ucx1O7OIF5FFOA3Yrz4/zYCJw1mewfBkhM1cCk1ByQlGBEw==
   /@tsdotnet/linked-node-list/1.3.11:
     dependencies:
       '@tsdotnet/collection-base': 2.0.4
@@ -3068,6 +3084,9 @@ packages:
       integrity: sha512-Ux4ygGWsu2c7isFWe8Yu1YluJmqVhxqK2cLXNQA5AcC3QfbGNpM7fu0Y8b/z16pXLnFxZYvWhd3fhBY9DLmC6Q==
 specifiers:
   '@tsdotnet/collection-base': ^2.0.4
+  '@tsdotnet/disposable': ^1.1.19
+  '@tsdotnet/exceptions': ^1.0.16
+  '@tsdotnet/lazy': ^1.0.19
   '@tsdotnet/ordered-registry': ^1.0.12
   '@types/chai': ^4.2.11
   '@types/mocha': ^7.0.2

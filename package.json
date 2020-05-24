@@ -4,13 +4,15 @@
   "description": "A strongly typed protected event creator/publisher/signaler for use with TypeScript and JavaScript.",
   "author": "electricessence",
   "license": "MIT",
-  "types": "dist/EventPublisher.d.ts",
-  "main": "dist/EventPublisher.js",
-  "module": "dist-esm/EventPublisher.js",
+  "types": "dist/eventFactory.d.ts",
+  "main": "dist/eventFactory.js",
+  "module": "dist-esm/eventFactory.js",
   "keywords": [
-    "TypeScript",
-    "collection",
-    "registry"
+    "event",
+    "listen",
+    "listener",
+    "subscribe",
+    "publish"
   ],
   "scripts": {
     "build:dist": "rimraf dist/* && copyfiles -u 1 src/**/*.d.ts dist && tsc",
@@ -58,6 +60,9 @@
   },
   "dependencies": {
     "@tsdotnet/collection-base": "^2.0.4",
+    "@tsdotnet/disposable": "^1.1.19",
+    "@tsdotnet/exceptions": "^1.0.16",
+    "@tsdotnet/lazy": "^1.0.19",
     "@tsdotnet/ordered-registry": "^1.0.12",
     "tslib": "^2.0.0"
   }

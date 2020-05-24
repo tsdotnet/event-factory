@@ -3,96 +3,44 @@
  * Licensing: MIT
  */
 
+import DisposableBase from '@tsdotnet/disposable';
+import Disposable from '@tsdotnet/disposable/dist/Disposable';
+import {Lazy} from '@tsdotnet/lazy';
 import {OrderedAutoRegistry} from '@tsdotnet/ordered-registry';
+import {ErrorHandling} from './ErrorHandling';
+import {EventDispatcher} from './EventDispatcher';
+import {EventPublisherOptions} from './EventPublisherOptions';
 
-export type Listener<T> = (value: T) => void;
-export type Unsubscribe = () => void;
-
-export interface Event<T>
+export default class EventPublisher<T>
+	extends DisposableBase
 {
-	/**
-	 * Adds a listener and return an unsubscribe function.
-	 * @param listener
-	 */
-	(listener: Listener<T>): Unsubscribe;
-
-	add (listener: Listener<T>): number;
-
-	register (listener: Listener<T>): number;
-
-	remove (id: number): Listener<T> | undefined;
-
-	clear (): number;
-}
-
-export const enum ErrorHandling
-{
-	Throw  = 0,
-	Log    = 1,
-	Ignore = -1
-}
-
-export interface EventPublisherOptions
-{
-	/**
-	 * When true, events will be published in reverse order.
-	 */
-	reversePublish?: boolean;
-
-	/**
-	 * When true, errors thrown by listeners will be logged, but not thrown.
-	 */
-	errorHandling?: ErrorHandling;
-
-	/**
-	 * When true, will clear listeners after every publish.
-	 */
-	clearListenersAfterPublish?: boolean;
-
-	/**
-	 * The remaining number of publishes that will emit to listeners.
-	 * When this number is zero all listeners are cleared and none can be added.
-	 */
-	remaining?: number;
-}
-
-
-export class EventPublisher<T>
-{
-	protected readonly _registry = new OrderedAutoRegistry<Listener<T>>();
-	protected readonly _pre = new OrderedAutoRegistry<EventPublisher<T>>();
-	protected readonly _post = new OrderedAutoRegistry<EventPublisher<T>>();
-	protected readonly _event: Event<T>;
-
 	public readonly options: EventPublisherOptions;
+	protected readonly _pre = Lazy.create(() => new OrderedAutoRegistry<EventPublisher<T>>());
+	protected readonly _dispatcher = Lazy.create(() => new EventDispatcher<T>(this.options));
+	protected readonly _post = Lazy.create(() => new OrderedAutoRegistry<EventPublisher<T>>());
 
-	constructor (remaining: number)
-	constructor (options?: EventPublisherOptions)
-	constructor (options?: EventPublisherOptions | number)
+	constructor (remaining: number, finalizer?: () => void)
+	constructor (options?: EventPublisherOptions | number | null, finalizer?: () => void)
+	constructor (options?: EventPublisherOptions | number | null, finalizer?: () => void)
 	{
-		const r = this._registry, o = createOptions(options);
-		this.options = o;
-		const add = (listener: Listener<T>) => {
-			const rem = o.remaining;
-			return rem && rem>0 ? r.add(listener) : NaN;
-		};
-		const remove = (id: number) => r.remove(id);
-		const event = (listener: Listener<T>) => {
-			const id = add(listener);
-			return isNaN(id) ? dummy : () => {
-				remove(id);
-			};
-		};
-		event.add = add;
-		event.remove = remove;
-		event.register = (listener: Listener<T>) => {
-			const rem = o.remaining;
-			return rem && rem>0 ? r.register(listener) : NaN;
-		};
-		event.clear = () => r.clear();
-		this._event = Object.freeze(event);
+		super('EventPublisher', finalizer);
+		this.options = createOptions(options);
 		Object.freeze(this);
 	}
+
+	/**
+	 * Sets the remaining number of publishes that will emit to listeners.
+	 * A value of zero will clear all listeners.
+	 * @param value
+	 */
+	set remaining (value: number)
+	{
+		if(isNaN(value)) return;
+		this.throwIfDisposed('Updating remaining for disposed publisher.');
+		this.options.remaining = value;
+		if(!value) this._dispatcher.valueReference?.clear();
+	}
+
 
 	/**
 	 * Gets the remaining number of publishes that will emit to listeners.
@@ -105,27 +53,16 @@ export class EventPublisher<T>
 	}
 
 	/**
-	 * Sets the remaining number of publishes that will emit to listeners.
-	 * A value of zero will clear all listeners.
-	 * @param value
+	 * The event dispatcher.
 	 */
-	set remaining (value: number)
+	get dispatcher (): EventDispatcher<T>
 	{
-		if(isNaN(value)) return;
-		this.options.remaining = value;
-		if(!value) this._registry.clear();
-	}
-
-	/**
-	 * The event object to subscribe to.
-	 */
-	get event (): Readonly<Event<T>>
-	{
-		return this._event;
+		return this._dispatcher.value;
 	}
 
 	/**
 	 * Adds an event publisher to be triggered before the event is published.
+	 * Disposing the returned `EventPublisher<T>` removes it from it's parent (this).
 	 * @param {number} remaining
 	 * @return {EventPublisher<T>}
 	 */
@@ -133,6 +70,7 @@ export class EventPublisher<T>
 
 	/**
 	 * Adds an event publisher to be triggered before the event is published.
+	 * Disposing the returned `EventPublisher<T>` removes it from it's parent (this).
 	 * @param {EventPublisherOptions} options
 	 * @return {EventPublisher<T>}
 	 */
@@ -140,18 +78,19 @@ export class EventPublisher<T>
 
 	/**
 	 * Adds an event publisher to be triggered before the event is published.
+	 * Disposing the returned `EventPublisher<T>` removes it from it's parent (this).
 	 * @param {number | EventPublisherOptions} options
 	 * @return {EventPublisher<T>}
 	 */
 	addPre (options?: number | EventPublisherOptions): EventPublisher<T>
 	{
-		const p = new EventPublisher<T>(options as any);
-		this._pre.add(p);
-		return p;
+		this.throwIfDisposed();
+		return addPub(this._pre.value, options);
 	}
 
 	/**
 	 * Adds an event publisher to be triggered after the event is published.
+	 * Disposing the returned `EventPublisher<T>` removes it from it's parent (this).
 	 * @param {number} remaining
 	 * @return {EventPublisher<T>}
 	 */
@@ -159,6 +98,7 @@ export class EventPublisher<T>
 
 	/**
 	 * Adds an event publisher to be triggered after the event is published.
+	 * Disposing the returned `EventPublisher<T>` removes it from it's parent (this).
 	 * @param {EventPublisherOptions} options
 	 * @return {EventPublisher<T>}
 	 */
@@ -166,14 +106,14 @@ export class EventPublisher<T>
 
 	/**
 	 * Adds an event publisher to be triggered after the event is published.
+	 * Disposing the returned `EventPublisher<T>` removes it from it's parent (this).
 	 * @param {number | EventPublisherOptions} options
 	 * @return {EventPublisher<T>}
 	 */
 	addPost (options?: number | EventPublisherOptions): EventPublisher<T>
 	{
-		const p = new EventPublisher<T>(options as any);
-		this._post.add(p);
-		return p;
+		this.throwIfDisposed();
+		return addPub(this._post.value, options);
 	}
 
 	/**
@@ -192,10 +132,13 @@ export class EventPublisher<T>
 
 		try
 		{
-			for(const e of _._pre) publish(e.value);
-			if(o.reversePublish) for(const e of _._registry.reversed) trigger(e.value);
-			else for(const e of _._registry) trigger(e.value);
-			for(const e of _._post) publish(e.value);
+			const
+				d    = _._dispatcher.valueReference,
+				pre  = _._pre.valueReference?.map(getValue).toArray(),
+				post = _._post.valueReference?.map(getValue).toArray();
+			if(pre) for(const e of pre) e.publish(payload);
+			if(d) d.dispatch(payload);
+			if(post) for(const e of post) e.publish(payload);
 		}
 		catch(e)
 		{
@@ -212,31 +155,21 @@ export class EventPublisher<T>
 		}
 		finally
 		{
-			if(r==0 || o.clearListenersAfterPublish) _._registry.clear();
+			if(r==0 || o.clearListenersAfterPublish) _._dispatcher.valueReference?.clear();
 		}
+	}
 
-		// abstract away ids.
-		function trigger (listener: Listener<T>)
-		{
-			listener(payload);
-		}
-
-		function publish (p: EventPublisher<T>)
-		{
-			p.publish(payload);
-		}
+	protected _onDispose ()
+	{
+		const d = this._dispatcher;
+		d.valueReference?.dispose();
+		d.dispose();
+		cleanReg(this._pre.valueReference)?.dispose();
+		cleanReg(this._post.valueReference)?.dispose();
 	}
 }
 
-
-export default EventPublisher;
-
-function dummy ()
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-{
-}
-
-function createOptions (options?: EventPublisherOptions | number): EventPublisherOptions
+function createOptions (options?: EventPublisherOptions | number | null): EventPublisherOptions
 {
 	return typeof options=='number' ? {remaining: options} : !options ? {} : {
 		reversePublish: options.reversePublish,
@@ -244,4 +177,27 @@ function createOptions (options?: EventPublisherOptions | number): EventPublishe
 		clearListenersAfterPublish: options.clearListenersAfterPublish,
 		remaining: options.remaining
 	};
+}
+
+function addPub<T> (
+	reg: OrderedAutoRegistry<EventPublisher<T>>,
+	options?: EventPublisherOptions | number): EventPublisher<T>
+{
+	let id = 0;
+	const p = new EventPublisher<T>(options, () => reg.remove(id));
+	id = reg.add(p);
+	return p;
+}
+
+function cleanReg<TDisposable extends Disposable> (reg?: OrderedAutoRegistry<TDisposable>): OrderedAutoRegistry<TDisposable> | undefined
+{
+	if(!reg) return reg;
+	for(const r of reg.toArray()) r.value.dispose();
+	reg.clear();
+	return reg;
+}
+
+function getValue<TValue> (e: { value: TValue }): TValue
+{
+	return e.value;
 }
