@@ -8,7 +8,6 @@
  */
 
 import DisposableBase from '@tsdotnet/disposable';
-import ObjectDisposedException from '@tsdotnet/disposable/dist/ObjectDisposedException';
 import ArgumentException from '@tsdotnet/exceptions/dist/ArgumentException';
 import ArgumentNullException from '@tsdotnet/exceptions/dist/ArgumentNullException';
 import InvalidOperationException from '@tsdotnet/exceptions/dist/InvalidOperationException';
@@ -133,9 +132,8 @@ export class EventDispatcher<T>
 	 */
 	dispatch (payload: T): void
 	{
-		const reg = this._registry;
-		if(!reg) throw new ObjectDisposedException('EventManager');
-
+		this.throwIfDisposed();
+		const reg = this._registry!;
 		const behavior = this._behavior;
 		try
 		{
@@ -182,7 +180,7 @@ export class EventDispatcher<T>
 	 */
 	protected createSubscribe (): Subscribe<T>
 	{
-		if(!this._registry) throw new ObjectDisposedException('EventManager');
+		this.throwIfDisposed();
 		return (listener: Listener<T>) => {
 			const id = this.register(listener);
 			if(isNaN(id)) throw new InvalidOperationException('Unable to subscribe to a disposed event.');
