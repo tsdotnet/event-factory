@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>event-factory | @tsdotnet/event-factory - v1.0.1</title>
-	<meta name="description" content="Documentation for @tsdotnet/event-factory - v1.0.1">
+	<title>event-factory | @tsdotnet/event-factory - v1.1.0</title>
+	<meta name="description" content="Documentation for @tsdotnet/event-factory - v1.1.0">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
 </head>
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">@tsdotnet/event-factory - v1.0.1</a>
+					<a href="../index.html" class="title">@tsdotnet/event-factory - v1.1.0</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -67,12 +67,6 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section ">
-							<h3>Enumerations</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-enum tsd-parent-kind-module"><a href="../enums/event_factory.errorhandling.html" class="tsd-kind-icon">Error<wbr>Handling</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
 							<h3>Classes</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter"><a href="../classes/event_factory.eventdispatcher.html" class="tsd-kind-icon">Event<wbr>Dispatcher</a></li>
@@ -85,6 +79,8 @@
 								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/event_factory.eventdispatchbehavior.html" class="tsd-kind-icon">Event<wbr>Dispatch<wbr>Behavior</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/event_factory.eventpublisheroptions.html" class="tsd-kind-icon">Event<wbr>Publisher<wbr>Options</a></li>
 								<li class="tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter"><a href="../interfaces/event_factory.eventregistry.html" class="tsd-kind-icon">Event<wbr>Registry</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter"><a href="../interfaces/event_factory.subscribable.html" class="tsd-kind-icon">Subscribable</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter"><a href="../interfaces/event_factory.subscribableonce.html" class="tsd-kind-icon">Subscribable<wbr>Once</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -93,6 +89,7 @@
 								<li class="tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter"><a href="event_factory.html#event" class="tsd-kind-icon">Event</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter"><a href="event_factory.html#listener" class="tsd-kind-icon">Listener</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter"><a href="event_factory.html#subscribe" class="tsd-kind-icon">Subscribe</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter"><a href="event_factory.html#subscribefn" class="tsd-kind-icon">Subscribe<wbr>Fn</a></li>
 								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="event_factory.html#unsubscribe" class="tsd-kind-icon">Unsubscribe</a></li>
 							</ul>
 						</section>
@@ -104,10 +101,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
 					<a name="event" class="tsd-anchor"></a>
 					<h3>Event</h3>
-					<div class="tsd-signature tsd-kind-icon">Event&lt;T&gt;<span class="tsd-signature-symbol">:</span> <a href="../interfaces/event_factory.eventregistry.html" class="tsd-signature-type">EventRegistry</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="event_factory.html#subscribe" class="tsd-signature-type">Subscribe</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<div class="tsd-signature tsd-kind-icon">Event&lt;T&gt;<span class="tsd-signature-symbol">:</span> <a href="../interfaces/event_factory.eventregistry.html" class="tsd-signature-type">EventRegistry</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="event_factory.html#subscribe" class="tsd-signature-type">Subscribe</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/event_factory.subscribable.html" class="tsd-signature-type">Subscribable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tsdotnet/event-factory/blob/5bc6283/src/Event.d.ts#L61">src/Event.d.ts:61</a></li>
+							<li>Defined in <a href="https://github.com/tsdotnet/event-factory/blob/454447b/src/Event.d.ts#L93">src/Event.d.ts:93</a></li>
 						</ul>
 					</aside>
 					<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -123,7 +120,7 @@
 					<div class="tsd-signature tsd-kind-icon">Listener&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tsdotnet/event-factory/blob/5bc6283/src/Event.d.ts#L13">src/Event.d.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/tsdotnet/event-factory/blob/454447b/src/Event.d.ts#L13">src/Event.d.ts:13</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -162,10 +159,26 @@
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
 					<a name="subscribe" class="tsd-anchor"></a>
 					<h3>Subscribe</h3>
-					<div class="tsd-signature tsd-kind-icon">Subscribe&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>listener<span class="tsd-signature-symbol">: </span><a href="event_factory.html#listener" class="tsd-signature-type">Listener</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="event_factory.html#unsubscribe" class="tsd-signature-type">Unsubscribe</a></div>
+					<div class="tsd-signature tsd-kind-icon">Subscribe&lt;T&gt;<span class="tsd-signature-symbol">:</span> <a href="event_factory.html#subscribefn" class="tsd-signature-type">SubscribeFn</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><a href="../interfaces/event_factory.subscribableonce.html" class="tsd-signature-type">SubscribableOnce</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tsdotnet/event-factory/blob/5bc6283/src/Event.d.ts#L25">src/Event.d.ts:25</a></li>
+							<li>Defined in <a href="https://github.com/tsdotnet/event-factory/blob/454447b/src/Event.d.ts#L46">src/Event.d.ts:46</a></li>
+						</ul>
+					</aside>
+					<h4 class="tsd-type-parameters-title">Type parameters</h4>
+					<ul class="tsd-type-parameters">
+						<li>
+							<h4>T</h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="subscribefn" class="tsd-anchor"></a>
+					<h3>Subscribe<wbr>Fn</h3>
+					<div class="tsd-signature tsd-kind-icon">Subscribe<wbr>Fn&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>listener<span class="tsd-signature-symbol">: </span><a href="event_factory.html#listener" class="tsd-signature-type">Listener</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, count<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="event_factory.html#unsubscribe" class="tsd-signature-type">Unsubscribe</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/tsdotnet/event-factory/blob/454447b/src/Event.d.ts#L27">src/Event.d.ts:27</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -174,6 +187,11 @@
 						</div>
 						<dl class="tsd-comment-tags">
 							<dt>param</dt>
+							<dd></dd>
+							<dt>param</dt>
+							<dd><p>Optional number of times to receive the event before automatically unsubscribing.</p>
+							</dd>
+							<dt>returns</dt>
 							<dd></dd>
 						</dl>
 					</div>
@@ -188,7 +206,7 @@
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter-signature">
 								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>listener<span class="tsd-signature-symbol">: </span><a href="event_factory.html#listener" class="tsd-signature-type">Listener</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="event_factory.html#unsubscribe" class="tsd-signature-type">Unsubscribe</a></li>
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>listener<span class="tsd-signature-symbol">: </span><a href="event_factory.html#listener" class="tsd-signature-type">Listener</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span>, count<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="event_factory.html#unsubscribe" class="tsd-signature-type">Unsubscribe</a></li>
 								</ul>
 								<ul class="tsd-descriptions">
 									<li class="tsd-description">
@@ -196,6 +214,9 @@
 										<ul class="tsd-parameters">
 											<li>
 												<h5>listener: <a href="event_factory.html#listener" class="tsd-signature-type">Listener</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+											</li>
+											<li>
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> count: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></h5>
 											</li>
 										</ul>
 										<h4 class="tsd-returns-title">Returns <a href="event_factory.html#unsubscribe" class="tsd-signature-type">Unsubscribe</a></h4>
@@ -211,7 +232,7 @@
 					<div class="tsd-signature tsd-kind-icon">Unsubscribe<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tsdotnet/event-factory/blob/5bc6283/src/Event.d.ts#L19">src/Event.d.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/tsdotnet/event-factory/blob/454447b/src/Event.d.ts#L19">src/Event.d.ts:19</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -250,9 +271,6 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-enum tsd-parent-kind-module">
-						<a href="../enums/event_factory.errorhandling.html" class="tsd-kind-icon">Error<wbr>Handling</a>
-					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="../classes/event_factory.eventdispatcher.html" class="tsd-kind-icon">Event<wbr>Dispatcher</a>
 					</li>
@@ -268,6 +286,12 @@
 					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="../interfaces/event_factory.eventregistry.html" class="tsd-kind-icon">Event<wbr>Registry</a>
 					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="../interfaces/event_factory.subscribable.html" class="tsd-kind-icon">Subscribable</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="../interfaces/event_factory.subscribableonce.html" class="tsd-kind-icon">Subscribable<wbr>Once</a>
+					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="event_factory.html#event" class="tsd-kind-icon">Event</a>
 					</li>
@@ -276,6 +300,9 @@
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="event_factory.html#subscribe" class="tsd-kind-icon">Subscribe</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+						<a href="event_factory.html#subscribefn" class="tsd-kind-icon">Subscribe<wbr>Fn</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
 						<a href="event_factory.html#unsubscribe" class="tsd-kind-icon">Unsubscribe</a>
@@ -296,9 +323,6 @@
 			<ul class="tsd-legend">
 				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
 				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
