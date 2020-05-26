@@ -20,9 +20,41 @@ export type Unsubscribe = () => void;
 
 /**
  * Adds a listener and returns an unsubscribe function.
- * @param listener
+ * @param {Listener<T>} listener
+ * @param {number} count Optional number of times to receive the event before automatically unsubscribing.
+ * @return {Unsubscribe}
  */
-export type Subscribe<T> = (listener: Listener<T>) => Unsubscribe;
+export type SubscribeFn<T> = (listener: Listener<T>, count?: number) => Unsubscribe;
+
+export interface SubscribableOnce<T>
+{
+	/**
+	 * Subscribes and automatically unsubscribes on first event.
+	 * @param {Listener<T>} listener
+	 * @return {Unsubscribe}
+	 */
+	once (listener: Listener<T>): Unsubscribe;
+
+	/**
+	 * The next event is resolved as a fulfilled promise. (The promise will never be faulted.)
+	 * If the event is never triggered, the promise will never resolve.
+	 * @return {Promise<T>}
+	 */
+	once (): Promise<T>;
+}
+
+export type Subscribe<T> = SubscribeFn<T> & SubscribableOnce<T>;
+
+export interface Subscribable<T>
+{
+	/**
+	 * Adds a listener and returns an unsubscribe function.
+	 * @param {Listener<T>} listener
+	 * @param {number} count Optional number of times to receive the event before automatically unsubscribing.
+	 * @return {Unsubscribe}
+	 */
+	readonly subscribe: Subscribe<T>;
+}
 
 export interface EventRegistry<T>
 {
@@ -58,4 +90,4 @@ export interface EventRegistry<T>
 	clear (): number;
 }
 
-export type Event<T> = EventRegistry<T> & Subscribe<T>;
+export type Event<T> = EventRegistry<T> & Subscribe<T> & Subscribable<T>;

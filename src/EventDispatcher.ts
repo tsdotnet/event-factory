@@ -14,7 +14,7 @@ import InvalidOperationException from '@tsdotnet/exceptions/dist/InvalidOperatio
 import {Lazy} from '@tsdotnet/lazy';
 import {OrderedAutoRegistry} from '@tsdotnet/ordered-registry';
 import {ErrorHandling} from './ErrorHandling';
-import {Event, EventRegistry, Listener, Subscribe} from './Event';
+import {Event, EventRegistry, Listener, Subscribe, Unsubscribe} from './Event';
 import {EventDispatchBehavior} from './EventDispatchBehavior';
 
 const LISTENER = 'listener';
@@ -23,8 +23,8 @@ export class EventDispatcher<T>
 	extends DisposableBase
 	implements EventRegistry<T>
 {
-	private _lookup?: WeakMap<Listener<T>, number>;
-	private _registry?: OrderedAutoRegistry<Listener<T>>;
+	private _lookup: WeakMap<Listener<T>, number>;
+	private _registry: OrderedAutoRegistry<Listener<T>>;
 	private readonly _behavior: Readonly<Required<EventDispatchBehavior>>;
 	private _publicSubscribe = Lazy.create(() => Object.freeze(this.createSubscribe()));
 	private _publicEvent = Lazy.create(() => {
@@ -33,7 +33,8 @@ export class EventDispatcher<T>
 		sub.register = (listener: Listener<T>) => this.add(listener);
 		sub.clear = () => this.clear();
 		sub.remove = (id: number) => this.remove(id);
-		return Object.freeze(sub);
+		sub.subscribe = this._publicSubscribe.value;
+		return Object.freeze(sub) as Event<T>;
 	});
 
 	constructor (behavior?: EventDispatchBehavior, finalizer?: () => void)
@@ -59,6 +60,7 @@ export class EventDispatcher<T>
 		return this._publicSubscribe.value;
 	}
 
+
 	/**
 	 * The scope independent event registry for subscribing and managing listeners.
 	 * @return {Readonly<Event<T>>}
@@ -78,9 +80,8 @@ export class EventDispatcher<T>
 	add (listener: Listener<T>): number
 	{
 		if(!listener) throw new ArgumentNullException(LISTENER);
-		const lookup = this._lookup;
-		if(!lookup) return NaN;
-		if(lookup.has(listener)) throw new ArgumentException(LISTENER, 'is already registered.');
+		if(!this.wasDisposed) return NaN;
+		if(this._lookup.has(listener)) throw new ArgumentException(LISTENER, 'is already registered.');
 		return this._registry!.add(listener);
 	}
 
@@ -94,9 +95,8 @@ export class EventDispatcher<T>
 	register (listener: Listener<T>): number
 	{
 		if(!listener) throw new ArgumentNullException(LISTENER);
-		const lookup = this._lookup;
-		if(!lookup) return NaN;
-		if(lookup.has(listener)) return lookup.get(listener)!;
+		if(this.wasDisposed) return NaN;
+		if(this._lookup.has(listener)) return this._lookup.get(listener)!;
 		return this._registry!.add(listener);
 	}
 
@@ -107,8 +107,8 @@ export class EventDispatcher<T>
 	 */
 	remove (id: number): Listener<T> | undefined
 	{
-		const listener = this._registry?.remove(id);
-		if(listener) this._lookup!.delete(listener);
+		const listener = this._registry.remove(id);
+		if(listener) this._lookup.delete(listener);
 		return listener;
 	}
 
@@ -118,11 +118,9 @@ export class EventDispatcher<T>
 	 */
 	clear (): number
 	{
-		const lookup = this._lookup;
-		if(!lookup) return NaN;
-		const reg = this._registry!;
-		for(const kvp of reg) lookup.delete(kvp.value);
-		return reg.clear();
+		if(!this.wasDisposed) return NaN;
+		for(const kvp of this._registry) this._lookup.delete(kvp.value);
+		return this._registry.clear();
 	}
 
 	/**
@@ -133,16 +131,19 @@ export class EventDispatcher<T>
 	dispatch (payload: T): void
 	{
 		this.throwIfDisposed();
-		const reg = this._registry!;
 		const behavior = this._behavior;
 		try
 		{
-			if(behavior?.reversePublish) for(const e of reg.reversed.toArray()) trigger(e.value);
-			else for(const e of reg.values.toArray()) trigger(e);
+			if(behavior.reversePublish) for(const e of
+				this._registry.reversed.toArray())
+			{
+				trigger(e.value);
+			}
+			else for(const e of this._registry.values.toArray()) trigger(e);
 		}
 		catch(e)
 		{
-			switch(behavior?.errorHandling)
+			switch(behavior.errorHandling)
 			{
 				case ErrorHandling.Ignore:
 					break;
@@ -155,7 +156,7 @@ export class EventDispatcher<T>
 		}
 		finally
 		{
-			if(behavior?.clearListenersAfterPublish) reg.clear();
+			if(behavior.clearListenersAfterPublish) this._registry.clear();
 		}
 
 		// abstract away ids.
@@ -168,8 +169,6 @@ export class EventDispatcher<T>
 	protected _onDispose (): void
 	{
 		this.clear();
-		this._lookup = undefined;
-		this._registry = undefined;
 		this._publicEvent.dispose();
 		this._publicSubscribe.dispose();
 	}
@@ -180,11 +179,40 @@ export class EventDispatcher<T>
 	 */
 	protected createSubscribe (): Subscribe<T>
 	{
-		this.throwIfDisposed();
-		return (listener: Listener<T>) => {
-			const id = this.register(listener);
+		const sub = (listener: Listener<T>, count?: number) => {
+			// Cover 0 or less cases where NaN is considered positive infinity.
+			if(typeof count=='number' && count<1) return dummy;
+			const id = this.register(typeof count=='number' && isFinite(count) ? (payload: T) => {
+				if(--count!<1) this.remove(id);
+				return listener(payload);
+			} : listener);
 			if(isNaN(id)) throw new InvalidOperationException('Unable to subscribe to a disposed event.');
 			return () => { this.remove(id); };
 		};
+
+		sub.once = once;
+		return sub;
+
+		function once (): Promise<T>
+		function once (listener: Listener<T>): Unsubscribe
+		function once (listener?: Listener<T>): Unsubscribe | Promise<T>
+		{
+			if(listener) sub(listener, 1);
+
+			/* NOTE: Since promises are deferred:
+			 * we have to be careful to capture an event that happens before initialization. */
+			let result: { payload: T } | undefined;
+			const preInit = sub(p => { result = {payload: p}; });
+			return new Promise<T>((resolve) => {
+				if(result) resolve(result.payload);
+				preInit(); // Unsubscribe.
+				sub(resolve, 1); // Resubscribe.  This may throw if disposed.
+			});
+		}
 	}
 }
+
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+function dummy () { }
+
+Object.freeze(dummy);

@@ -164,7 +164,7 @@ export default class EventPublisher<T>
 		}
 	}
 
-	protected _onDispose ()
+	protected _onDispose (): void
 	{
 		const d = this._dispatcher;
 		d.valueReference?.dispose();

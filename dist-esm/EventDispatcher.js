@@ -23,6 +23,7 @@ export class EventDispatcher extends DisposableBase {
             sub.register = (listener) => this.add(listener);
             sub.clear = () => this.clear();
             sub.remove = (id) => this.remove(id);
+            sub.subscribe = this._publicSubscribe.value;
             return Object.freeze(sub);
         });
         this._behavior = Object.freeze({
@@ -157,12 +158,24 @@ export class EventDispatcher extends DisposableBase {
      */
     createSubscribe() {
         this.throwIfDisposed();
-        return (listener) => {
-            const id = this.register(listener);
+        const sub = (listener, count) => {
+            // Cover 0 or less cases where NaN is considered positive infinity.
+            if (typeof count == 'number' && count < 1)
+                return dummy;
+            const id = this.register(typeof count == 'number' && isFinite(count) ? (payload) => {
+                if (--count < 1)
+                    this.remove(id);
+                return listener(payload);
+            } : listener);
             if (isNaN(id))
                 throw new InvalidOperationException('Unable to subscribe to a disposed event.');
             return () => { this.remove(id); };
         };
+        sub.once = (listener) => sub(listener, 1);
+        return sub;
     }
 }
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+function dummy() { }
+Object.freeze(dummy);
 //# sourceMappingURL=EventDispatcher.js.map
