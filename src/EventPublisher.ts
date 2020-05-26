@@ -11,7 +11,6 @@ import DisposableBase from '@tsdotnet/disposable';
 import Disposable from '@tsdotnet/disposable/dist/Disposable';
 import {Lazy} from '@tsdotnet/lazy';
 import {OrderedAutoRegistry} from '@tsdotnet/ordered-registry';
-import {ErrorHandling} from './ErrorHandling';
 import {EventDispatcher} from './EventDispatcher';
 import {EventPublisherOptions} from './EventPublisherOptions';
 
@@ -126,6 +125,7 @@ export default class EventPublisher<T>
 	 */
 	publish (payload: T): void
 	{
+		this.throwIfDisposed();
 		const _ = this, o = _.options;
 		let r = o.remaining;
 		if(r===0) return;
@@ -145,18 +145,10 @@ export default class EventPublisher<T>
 			if(d) d.dispatch(payload);
 			publish(post as EventPublisher<T>[], payload);
 		}
-		catch(e)
+		catch(ex)
 		{
-			switch(o.errorHandling)
-			{
-				case ErrorHandling.Ignore:
-					break;
-				case ErrorHandling.Log:
-					console.error(e);
-					break;
-				default:
-					throw e;
-			}
+			if(o.onError) o.onError(ex);
+			else throw ex;
 		}
 		finally
 		{
@@ -183,7 +175,7 @@ function createOptions (options?: EventPublisherOptions | number | null): EventP
 {
 	return typeof options=='number' ? {remaining: options} : !options ? {} : {
 		reversePublish: options.reversePublish,
-		errorHandling: options.errorHandling,
+		onError: options.onError,
 		clearListenersAfterPublish: options.clearListenersAfterPublish,
 		remaining: options.remaining
 	};

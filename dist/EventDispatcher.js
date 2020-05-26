@@ -30,9 +30,10 @@ class EventDispatcher extends disposable_1.default {
             sub.subscribe = this._publicSubscribe.value;
             return Object.freeze(sub);
         });
+        this._autoDispose = lazy_1.Lazy.create(() => new EventDispatcher());
         this._behavior = Object.freeze({
             reversePublish: (behavior === null || behavior === void 0 ? void 0 : behavior.reversePublish) == true,
-            errorHandling: (behavior === null || behavior === void 0 ? void 0 : behavior.errorHandling) || 0 /* Throw */,
+            onError: behavior === null || behavior === void 0 ? void 0 : behavior.onError,
             clearListenersAfterPublish: (behavior === null || behavior === void 0 ? void 0 : behavior.clearListenersAfterPublish) == true
         });
         this._lookup = new WeakMap();
@@ -63,10 +64,9 @@ class EventDispatcher extends disposable_1.default {
     add(listener) {
         if (!listener)
             throw new ArgumentNullException_1.default(LISTENER);
-        const lookup = this._lookup;
-        if (!lookup)
+        if (this.wasDisposed)
             return NaN;
-        if (lookup.has(listener))
+        if (this._lookup.has(listener))
             throw new ArgumentException_1.default(LISTENER, 'is already registered.');
         return this._registry.add(listener);
     }
@@ -80,11 +80,10 @@ class EventDispatcher extends disposable_1.default {
     register(listener) {
         if (!listener)
             throw new ArgumentNullException_1.default(LISTENER);
-        const lookup = this._lookup;
-        if (!lookup)
+        if (this.wasDisposed)
             return NaN;
-        if (lookup.has(listener))
-            return lookup.get(listener);
+        if (this._lookup.has(listener))
+            return this._lookup.get(listener);
         return this._registry.add(listener);
     }
     /**
@@ -93,8 +92,7 @@ class EventDispatcher extends disposable_1.default {
      * @return {Listener<T> | undefined} The listener or undefined if not found.
      */
     remove(id) {
-        var _a;
-        const listener = (_a = this._registry) === null || _a === void 0 ? void 0 : _a.remove(id);
+        const listener = this._registry.remove(id);
         if (listener)
             this._lookup.delete(listener);
         return listener;
@@ -104,13 +102,11 @@ class EventDispatcher extends disposable_1.default {
      * @return {number} The number of listeners cleared. Returns NaN if this has been disposed.
      */
     clear() {
-        const lookup = this._lookup;
-        if (!lookup)
+        if (this.wasDisposed)
             return NaN;
-        const reg = this._registry;
-        for (const kvp of reg)
-            lookup.delete(kvp.value);
-        return reg.clear();
+        for (const kvp of this._registry)
+            this._lookup.delete(kvp.value);
+        return this._registry.clear();
     }
     /**
      * Dispatches payload to listeners.
@@ -120,48 +116,53 @@ class EventDispatcher extends disposable_1.default {
     dispatch(payload) {
         this.throwIfDisposed();
         const reg = this._registry;
+        if (reg.isEmpty)
+            return;
         const behavior = this._behavior;
+        const listeners = reg.values.toArray();
         try {
-            if (behavior === null || behavior === void 0 ? void 0 : behavior.reversePublish)
-                for (const e of reg.reversed.toArray())
-                    trigger(e.value);
-            else
-                for (const e of reg.values.toArray())
-                    trigger(e);
-        }
-        catch (e) {
-            switch (behavior === null || behavior === void 0 ? void 0 : behavior.errorHandling) {
-                case -1 /* Ignore */:
-                    break;
-                case 1 /* Log */:
-                    console.error(e);
-                    break;
-                default:
-                    throw e;
+            if (behavior.reversePublish) {
+                let i = listeners.length;
+                while (--i >= 0)
+                    listeners[i](payload);
+            }
+            else {
+                for (const e of listeners)
+                    e(payload);
             }
         }
-        finally {
-            if (behavior === null || behavior === void 0 ? void 0 : behavior.clearListenersAfterPublish)
-                reg.clear();
+        catch (ex) {
+            if (behavior.onError)
+                behavior.onError(ex);
+            else
+                throw ex;
         }
-        // abstract away ids.
-        function trigger(listener) {
-            listener(payload);
+        finally {
+            if (behavior.clearListenersAfterPublish)
+                reg.clear();
         }
     }
     _onDispose() {
         this.clear();
-        this._lookup = undefined;
-        this._registry = undefined;
         this._publicEvent.dispose();
         this._publicSubscribe.dispose();
+        const autoDispose = this._autoDispose.valueReference;
+        autoDispose === null || autoDispose === void 0 ? void 0 : autoDispose.dispatch();
+        autoDispose === null || autoDispose === void 0 ? void 0 : autoDispose.dispose();
+        this._autoDispose.dispose();
+    }
+    /**
+     * A lazy-initialized event for listening for disposal.
+     * @return {Event<void>}
+     */
+    get onDispose() {
+        return this._autoDispose.value.event;
     }
     /**
      * Creates a scope independent function for subscribing to an event.
      * @return {Subscribe<T>}
      */
     createSubscribe() {
-        this.throwIfDisposed();
         const sub = (listener, count) => {
             // Cover 0 or less cases where NaN is considered positive infinity.
             if (typeof count == 'number' && count < 1)
@@ -175,7 +176,27 @@ class EventDispatcher extends disposable_1.default {
                 throw new InvalidOperationException_1.default('Unable to subscribe to a disposed event.');
             return () => { this.remove(id); };
         };
-        sub.once = (listener) => sub(listener, 1);
+        sub.once = (listener) => {
+            if (listener)
+                return sub(listener, 1);
+            /* NOTE: Since promises are deferred:
+             * we have to be careful to capture an event that happens before initialization. */
+            let result;
+            const preInit = sub(p => { result = { payload: p }; });
+            return new Promise((resolve, reject) => {
+                if (result)
+                    resolve(result.payload);
+                preInit(); // Unsubscribe.
+                // Lazy throw if already disposed.
+                const d = this.onDispose(() => {
+                    reject(new Error('Event was disposed.'));
+                });
+                sub((p => {
+                    d(); // remove dispose handler.
+                    resolve(p);
+                }), 1); // Resubscribe.  This may throw if disposed.
+            });
+        };
         return sub;
     }
 }

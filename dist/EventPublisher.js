@@ -76,6 +76,7 @@ class EventPublisher extends disposable_1.default {
      */
     publish(payload) {
         var _a, _b, _c;
+        this.throwIfDisposed();
         const _ = this, o = _.options;
         let r = o.remaining;
         if (r === 0)
@@ -93,16 +94,11 @@ class EventPublisher extends disposable_1.default {
                 d.dispatch(payload);
             publish(post, payload);
         }
-        catch (e) {
-            switch (o.errorHandling) {
-                case -1 /* Ignore */:
-                    break;
-                case 1 /* Log */:
-                    console.error(e);
-                    break;
-                default:
-                    throw e;
-            }
+        catch (ex) {
+            if (o.onError)
+                o.onError(ex);
+            else
+                throw ex;
         }
         finally {
             if (r == 0 || o.clearListenersAfterPublish)
@@ -127,7 +123,7 @@ function publish(p, payload) {
 function createOptions(options) {
     return typeof options == 'number' ? { remaining: options } : !options ? {} : {
         reversePublish: options.reversePublish,
-        errorHandling: options.errorHandling,
+        onError: options.onError,
         clearListenersAfterPublish: options.clearListenersAfterPublish,
         remaining: options.remaining
     };

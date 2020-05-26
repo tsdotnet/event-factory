@@ -21,6 +21,77 @@ describe('EventPublisher', () => {
 		expect(count).equal(3);
 	});
 
+	it('should publish events in expected order', () => {
+		{
+			let count = 0;
+			const pub = new EventPublisher<void>();
+			pub.dispatcher.event.add(() => {
+				expect(++count).equal(1);
+			});
+			pub.dispatcher.event.add(() => {
+				expect(++count).equal(2);
+			});
+			pub.publish();
+		}
+		{
+			let count = 0;
+			const pub = new EventPublisher<void>({reversePublish: true});
+			pub.dispatcher.event.add(() => {
+				expect(++count).equal(2);
+			});
+			pub.dispatcher.event.add(() => {
+				expect(++count).equal(1);
+			});
+			pub.publish();
+		}
+	});
+
+	it('should not publish events after remaining is set to zero', () => {
+		{
+			let count = 0;
+			const max = 3;
+			const pub = new EventPublisher<void>(max);
+			pub.dispatcher.subscribe(() => ++count);
+			pub.publish();
+			expect(count).equal(1);
+			expect(pub.remaining).equal(2);
+			pub.remaining = 0;
+			pub.publish();
+			expect(count).equal(1);
+		}
+		{
+			let count = 0;
+			const pub = new EventPublisher<void>();
+			pub.dispatcher.event.add(() => ++count);
+			pub.publish();
+			expect(count).equal(1);
+			pub.remaining = 0;
+			pub.publish();
+			expect(count).equal(1);
+		}
+	});
+
+	it('should handle errors as requested', () => {
+		const ERROR = 'error';
+		{
+			const pub = new EventPublisher<void>();
+			pub.dispatcher.event.add(() => { throw ERROR; });
+			expect(() => pub.publish()).to.throw();
+		}
+		{
+			let errorOccurred = false;
+			const pub = new EventPublisher<void>({
+				onError: ex => {
+					errorOccurred = true;
+					expect(ex).equal(ERROR);
+				}
+			});
+			pub.dispatcher.event.add(() => { throw ERROR; });
+			expect(() => pub.publish()).not.to.throw();
+			expect(errorOccurred).to.be.true;
+		}
+	});
+
 	it('should only receive event count requested', () => {
 		let count = 0;
 		const max = 3;
@@ -101,12 +172,16 @@ describe('EventPublisher', () => {
 		const max = 3;
 		const pub = new EventPublisher<void>(max);
 		testChildPub(max, pub, pub.addPre(max).addPre(max));
+		pub.dispose();
+		expect(() => pub.publish()).to.throw();
 	});
 
 	it('should publish to post events', () => {
 		const max = 3;
 		const pub = new EventPublisher<void>(max);
 		testChildPub(max, pub, pub.addPost(max).addPost(max));
+		pub.dispose();
+		expect(() => pub.publish()).to.throw();
 	});
 
 });

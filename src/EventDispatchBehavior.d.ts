@@ -2,12 +2,11 @@
  * @author electricessence / https://github.com/electricessence/
  * Licensing: MIT
  */
+
 /**
  * @packageDocumentation
  * @module event-factory
  */
-
-import {ErrorHandling} from './ErrorHandling';
 
 export interface EventDispatchBehavior
 {
@@ -17,11 +16,11 @@ export interface EventDispatchBehavior
 	reversePublish?: boolean;
 
 	/**
-	 * By default `Throw` (0) will allow errors to be thrown and subsequent execution will cease.
-	 * Set this option to `Log` (1) to send the errors to the console.
-	 * Set this option to `Ignore` (-1) to silently swallow all errors.
+	 * By default any errors caused by listeners will be thrown unless an error handler is specified here.
+	 * For example, specifying console.error as the handler will send it to the console instead of throwing.
+	 * You may want to inject a different error handler here.
 	 */
-	errorHandling?: ErrorHandling;
+	onError?: (error: unknown) => void;
 
 	/**
 	 * When true, will clear listeners after every publish.

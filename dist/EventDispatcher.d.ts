@@ -10,11 +10,12 @@ import DisposableBase from '@tsdotnet/disposable';
 import { Event, EventRegistry, Listener, Subscribe } from './Event';
 import { EventDispatchBehavior } from './EventDispatchBehavior';
 export declare class EventDispatcher<T> extends DisposableBase implements EventRegistry<T> {
-    private _lookup?;
-    private _registry?;
+    private readonly _lookup;
+    private readonly _registry;
     private readonly _behavior;
-    private _publicSubscribe;
-    private _publicEvent;
+    private readonly _publicSubscribe;
+    private readonly _publicEvent;
+    private readonly _autoDispose;
     constructor(behavior?: EventDispatchBehavior, finalizer?: () => void);
     /**
      * The scope independent function for subscribing to an event.
@@ -60,6 +61,11 @@ export declare class EventDispatcher<T> extends DisposableBase implements EventR
      */
     dispatch(payload: T): void;
     protected _onDispose(): void;
+    /**
+     * A lazy-initialized event for listening for disposal.
+     * @return {Event<void>}
+     */
+    get onDispose(): Event<void>;
     /**
      * Creates a scope independent function for subscribing to an event.
      * @return {Subscribe<T>}
