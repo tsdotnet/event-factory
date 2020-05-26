@@ -28,13 +28,10 @@ export declare class EventDispatcher<T> extends DisposableBase implements EventR
      */
     get event(): Event<T>;
     /**
-     * Attempts to add a listener.
-     * @throws `ArgumentNullException` if the listener is null.
-     * @throws `ArgumentException` if the listener already exists.
-     * @param {Listener<T>} listener
-     * @return {number} The registered `Id` of the listener. Returns NaN if this has been disposed.
+     * A lazy-initialized event for listening for disposal.
+     * @return {Event<void>}
      */
-    add(listener: Listener<T>): number;
+    get onDispose(): Event<void>;
     /**
      * Registers a listener.
      * If the listener already exists, nothing changes and the original `Id` is returned.
@@ -50,6 +47,14 @@ export declare class EventDispatcher<T> extends DisposableBase implements EventR
      */
     remove(id: number): Listener<T> | undefined;
     /**
+     * Attempts to add a listener.
+     * @throws `ArgumentNullException` if the listener is null.
+     * @throws `ArgumentException` if the listener already exists.
+     * @param {Listener<T>} listener
+     * @return {number} The registered `Id` of the listener. Returns NaN if this has been disposed.
+     */
+    add(listener: Listener<T>): number;
+    /**
      * Clears all listeners.
      * @return {number} The number of listeners cleared. Returns NaN if this has been disposed.
      */
@@ -61,11 +66,6 @@ export declare class EventDispatcher<T> extends DisposableBase implements EventR
      */
     dispatch(payload: T): void;
     protected _onDispose(): void;
-    /**
-     * A lazy-initialized event for listening for disposal.
-     * @return {Event<void>}
-     */
-    get onDispose(): Event<void>;
     /**
      * Creates a scope independent function for subscribing to an event.
      * @return {Subscribe<T>}

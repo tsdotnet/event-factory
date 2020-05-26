@@ -55,20 +55,11 @@ class EventDispatcher extends disposable_1.default {
         return this._publicEvent.value;
     }
     /**
-     * Attempts to add a listener.
-     * @throws `ArgumentNullException` if the listener is null.
-     * @throws `ArgumentException` if the listener already exists.
-     * @param {Listener<T>} listener
-     * @return {number} The registered `Id` of the listener. Returns NaN if this has been disposed.
+     * A lazy-initialized event for listening for disposal.
+     * @return {Event<void>}
      */
-    add(listener) {
-        if (!listener)
-            throw new ArgumentNullException_1.default(LISTENER);
-        if (this.wasDisposed)
-            return NaN;
-        if (this._lookup.has(listener))
-            throw new ArgumentException_1.default(LISTENER, 'is already registered.');
-        return this._registry.add(listener);
+    get onDispose() {
+        return this._autoDispose.value.event;
     }
     /**
      * Registers a listener.
@@ -96,6 +87,22 @@ class EventDispatcher extends disposable_1.default {
         if (listener)
             this._lookup.delete(listener);
         return listener;
+    }
+    /**
+     * Attempts to add a listener.
+     * @throws `ArgumentNullException` if the listener is null.
+     * @throws `ArgumentException` if the listener already exists.
+     * @param {Listener<T>} listener
+     * @return {number} The registered `Id` of the listener. Returns NaN if this has been disposed.
+     */
+    add(listener) {
+        if (!listener)
+            throw new ArgumentNullException_1.default(LISTENER);
+        if (this.wasDisposed)
+            return NaN;
+        if (this._lookup.has(listener))
+            throw new ArgumentException_1.default(LISTENER, 'is already registered.');
+        return this._registry.add(listener);
     }
     /**
      * Clears all listeners.
@@ -150,13 +157,6 @@ class EventDispatcher extends disposable_1.default {
         autoDispose === null || autoDispose === void 0 ? void 0 : autoDispose.dispatch();
         autoDispose === null || autoDispose === void 0 ? void 0 : autoDispose.dispose();
         this._autoDispose.dispose();
-    }
-    /**
-     * A lazy-initialized event for listening for disposal.
-     * @return {Event<void>}
-     */
-    get onDispose() {
-        return this._autoDispose.value.event;
     }
     /**
      * Creates a scope independent function for subscribing to an event.
