@@ -7,6 +7,7 @@
  * @ignore
  */
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.EventDispatcher = void 0;
 const tslib_1 = require("tslib");
 const EventPublisher_1 = tslib_1.__importDefault(require("./EventPublisher"));
 var EventDispatcher_1 = require("./EventDispatcher");

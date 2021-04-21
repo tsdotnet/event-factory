@@ -7,6 +7,7 @@
 	<meta name="description" content="Documentation for @tsdotnet/event-factory - v1.1.1">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
+	<script async src="../assets/js/search.js" id="search-script"></script>
 </head>
 <body>
 <header>
@@ -49,7 +50,7 @@
 		<div class="container">
 			<ul class="tsd-breadcrumb">
 				<li>
-					<a href="../index.html">Globals</a>
+					<a href="../index.html">@tsdotnet/event-factory - v1.1.1</a>
 				</li>
 				<li>
 					<a href="../modules/event_factory.html">event-factory</a>
@@ -72,7 +73,7 @@
 						<span class="target">EventDispatchBehavior</span>
 						<ul class="tsd-hierarchy">
 							<li>
-								<a href="event_factory.eventpublisheroptions.html" class="tsd-signature-type">EventPublisherOptions</a>
+								<a href="event_factory.eventpublisheroptions.html" class="tsd-signature-type" data-tsd-kind="Interface">EventPublisherOptions</a>
 							</li>
 						</ul>
 					</li>
@@ -98,10 +99,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="clearlistenersafterpublish" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> clear<wbr>Listeners<wbr>After<wbr>Publish</h3>
-					<div class="tsd-signature tsd-kind-icon">clear<wbr>Listeners<wbr>After<wbr>Publish<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></div>
+					<div class="tsd-signature tsd-kind-icon">clear<wbr>Listeners<wbr>After<wbr>Publish<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tsdotnet/event-factory/blob/ca3b4f5/src/EventDispatchBehavior.d.ts#L29">src/EventDispatchBehavior.d.ts:29</a></li>
+							<li>Defined in <a href="https://github.com/tsdotnet/event-factory/blob/da106b6/src/EventDispatchBehavior.d.ts#L29">EventDispatchBehavior.d.ts:29</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -114,10 +115,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="onerror" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Error</h3>
-					<div class="tsd-signature tsd-kind-icon">on<wbr>Error<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>error<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span></div>
+					<div class="tsd-signature tsd-kind-icon">on<wbr>Error<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>error<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tsdotnet/event-factory/blob/ca3b4f5/src/EventDispatchBehavior.d.ts#L23">src/EventDispatchBehavior.d.ts:23</a></li>
+							<li>Defined in <a href="https://github.com/tsdotnet/event-factory/blob/da106b6/src/EventDispatchBehavior.d.ts#L23">EventDispatchBehavior.d.ts:23</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -127,14 +128,35 @@
 							You may want to inject a different error handler here.</p>
 						</div>
 					</div>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-signature">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-interface">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>error<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5>error: <span class="tsd-signature-type">unknown</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="reversepublish" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> reverse<wbr>Publish</h3>
-					<div class="tsd-signature tsd-kind-icon">reverse<wbr>Publish<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></div>
+					<div class="tsd-signature tsd-kind-icon">reverse<wbr>Publish<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/tsdotnet/event-factory/blob/ca3b4f5/src/EventDispatchBehavior.d.ts#L16">src/EventDispatchBehavior.d.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/tsdotnet/event-factory/blob/da106b6/src/EventDispatchBehavior.d.ts#L16">EventDispatchBehavior.d.ts:16</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -148,22 +170,28 @@
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 			<nav class="tsd-navigation primary">
 				<ul>
-					<li class="globals  ">
-						<a href="../index.html"><em>Globals</em></a>
+					<li class=" ">
+						<a href="../index.html">Exports</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/event_factory.html">event-<wbr>factory</a>
 					</li>
 					<li class="current tsd-kind-module">
+						<a href="../modules/event_factory.html">event-<wbr>factory</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/event_factory.html">event-<wbr>factory</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/event_factory.html">event-<wbr>factory</a>
+					</li>
+					<li class=" tsd-kind-module">
 						<a href="../modules/event_factory.html">event-<wbr>factory</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="../classes/event_factory.eventdispatcher.html" class="tsd-kind-icon">Event<wbr>Dispatcher</a>
-					</li>
-					<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="../classes/event_factory.eventpublisher.html" class="tsd-kind-icon">Event<wbr>Publisher</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-parent-kind-module">
@@ -182,33 +210,6 @@
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-interface tsd-parent-kind-module">
-						<a href="event_factory.eventpublisheroptions.html" class="tsd-kind-icon">Event<wbr>Publisher<wbr>Options</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="event_factory.eventregistry.html" class="tsd-kind-icon">Event<wbr>Registry</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="event_factory.subscribable.html" class="tsd-kind-icon">Subscribable</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="event_factory.subscribableonce.html" class="tsd-kind-icon">Subscribable<wbr>Once</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="../modules/event_factory.html#event" class="tsd-kind-icon">Event</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="../modules/event_factory.html#listener" class="tsd-kind-icon">Listener</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="../modules/event_factory.html#subscribe" class="tsd-kind-icon">Subscribe</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
-						<a href="../modules/event_factory.html#subscribefn" class="tsd-kind-icon">Subscribe<wbr>Fn</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
-						<a href="../modules/event_factory.html#unsubscribe" class="tsd-kind-icon">Unsubscribe</a>
-					</li>
 				</ul>
 			</nav>
 		</div>
@@ -238,6 +239,5 @@
 </div>
 <div class="overlay"></div>
 <script src="../assets/js/main.js"></script>
-<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
 </body>
 </html>
