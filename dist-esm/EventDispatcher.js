@@ -2,10 +2,6 @@
  * @author electricessence / https://github.com/electricessence/
  * Licensing: MIT
  */
-/**
- * @packageDocumentation
- * @module event-factory
- */
 import DisposableBase from '@tsdotnet/disposable';
 import ArgumentException from '@tsdotnet/exceptions/dist/ArgumentException';
 import ArgumentNullException from '@tsdotnet/exceptions/dist/ArgumentNullException';

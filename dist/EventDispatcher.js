@@ -3,10 +3,6 @@
  * @author electricessence / https://github.com/electricessence/
  * Licensing: MIT
  */
-/**
- * @packageDocumentation
- * @module event-factory
- */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EventDispatcher = void 0;
 const tslib_1 = require("tslib");

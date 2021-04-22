@@ -1,10 +1,7 @@
 "use strict";
-/**!
+/*!
  * @author electricessence / https://github.com/electricessence/
  * @license MIT
- * @packageDocumentation
- * @module event-factory
- * @ignore
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EventDispatcher = void 0;

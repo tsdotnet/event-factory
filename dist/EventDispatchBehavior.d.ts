@@ -3,11 +3,6 @@
  * Licensing: MIT
  */
 
-/**
- * @packageDocumentation
- * @module event-factory
- */
-
 export interface EventDispatchBehavior
 {
 	/**

@@ -1,9 +1,6 @@
-/**!
+/*!
  * @author electricessence / https://github.com/electricessence/
  * @license MIT
- * @packageDocumentation
- * @module event-factory
- * @ignore
  */
 import EventPublisher from './EventPublisher';
 import { EventPublisherOptions } from './EventPublisherOptions';

@@ -2,10 +2,6 @@
  * @author electricessence / https://github.com/electricessence/
  * Licensing: MIT
  */
-/**
- * @packageDocumentation
- * @module event-factory
- */
 import DisposableBase from '@tsdotnet/disposable';
 import { Lazy } from '@tsdotnet/lazy';
 import { OrderedAutoRegistry } from '@tsdotnet/ordered-registry';
