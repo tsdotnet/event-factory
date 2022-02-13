@@ -9,7 +9,7 @@ A strongly typed protected event creator/publisher/signaler for use with TypeScr
 
 ## Docs
 
-[tsdotnet.github.io/event-factory](https://tsdotnet.github.io/event-factory/modules/event_factory.html)
+[tsdotnet.github.io/event-factory](https://tsdotnet.github.io/event-factory/)
 
 ## Purpose
 * Provides an API that separates event listening/subscribing from dispatching/publishing.
