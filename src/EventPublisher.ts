@@ -18,8 +18,8 @@ export default class EventPublisher<T>
 	protected readonly _dispatcher = Lazy.create(() => new EventDispatcher<T>(this.options));
 	protected readonly _post = Lazy.create(() => new OrderedAutoRegistry<EventPublisher<T>>());
 
-	constructor (remaining: number, finalizer?: () => void)
-	constructor (options?: EventPublisherOptions | number | null, finalizer?: () => void)
+	constructor (remaining: number, finalizer?: () => void);
+	constructor (options?: EventPublisherOptions | number | null, finalizer?: () => void);
 	constructor (options?: EventPublisherOptions | number | null, finalizer?: () => void)
 	{
 		super('EventPublisher', finalizer);
@@ -65,7 +65,7 @@ export default class EventPublisher<T>
 	 * @param {number} remaining
 	 * @return {EventPublisher<T>}
 	 */
-	addPre (remaining: number): EventPublisher<T>
+	addPre (remaining: number): EventPublisher<T>;
 
 	/**
 	 * Adds an event publisher to be triggered before the event is published.
@@ -73,7 +73,7 @@ export default class EventPublisher<T>
 	 * @param {EventPublisherOptions} options
 	 * @return {EventPublisher<T>}
 	 */
-	addPre (options?: EventPublisherOptions): EventPublisher<T>
+	addPre (options?: EventPublisherOptions): EventPublisher<T>;
 
 	/**
 	 * Adds an event publisher to be triggered before the event is published.
@@ -93,7 +93,7 @@ export default class EventPublisher<T>
 	 * @param {number} remaining
 	 * @return {EventPublisher<T>}
 	 */
-	addPost (remaining: number): EventPublisher<T>
+	addPost (remaining: number): EventPublisher<T>;
 
 	/**
 	 * Adds an event publisher to be triggered after the event is published.
@@ -101,7 +101,7 @@ export default class EventPublisher<T>
 	 * @param {EventPublisherOptions} options
 	 * @return {EventPublisher<T>}
 	 */
-	addPost (options?: EventPublisherOptions): EventPublisher<T>
+	addPost (options?: EventPublisherOptions): EventPublisher<T>;
 
 	/**
 	 * Adds an event publisher to be triggered after the event is published.
