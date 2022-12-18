@@ -5,7 +5,7 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
-const disposable_1 = (0, tslib_1.__importDefault)(require("@tsdotnet/disposable"));
+const disposable_1 = tslib_1.__importDefault(require("@tsdotnet/disposable"));
 const lazy_1 = require("@tsdotnet/lazy");
 const ordered_registry_1 = require("@tsdotnet/ordered-registry");
 const EventDispatcher_1 = require("./EventDispatcher");

@@ -6,10 +6,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EventDispatcher = void 0;
 const tslib_1 = require("tslib");
-const disposable_1 = (0, tslib_1.__importDefault)(require("@tsdotnet/disposable"));
-const ArgumentException_1 = (0, tslib_1.__importDefault)(require("@tsdotnet/exceptions/dist/ArgumentException"));
-const ArgumentNullException_1 = (0, tslib_1.__importDefault)(require("@tsdotnet/exceptions/dist/ArgumentNullException"));
-const InvalidOperationException_1 = (0, tslib_1.__importDefault)(require("@tsdotnet/exceptions/dist/InvalidOperationException"));
+const disposable_1 = tslib_1.__importDefault(require("@tsdotnet/disposable"));
+const ArgumentException_1 = tslib_1.__importDefault(require("@tsdotnet/exceptions/dist/ArgumentException"));
+const ArgumentNullException_1 = tslib_1.__importDefault(require("@tsdotnet/exceptions/dist/ArgumentNullException"));
+const InvalidOperationException_1 = tslib_1.__importDefault(require("@tsdotnet/exceptions/dist/InvalidOperationException"));
 const lazy_1 = require("@tsdotnet/lazy");
 const ordered_registry_1 = require("@tsdotnet/ordered-registry");
 const LISTENER = 'listener';
