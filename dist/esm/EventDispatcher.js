@@ -2,31 +2,32 @@
  * @author electricessence / https://github.com/electricessence/
  * Licensing: MIT
  */
-import DisposableBase from '@tsdotnet/disposable';
-import ArgumentException from '@tsdotnet/exceptions/dist/ArgumentException';
-import ArgumentNullException from '@tsdotnet/exceptions/dist/ArgumentNullException';
-import InvalidOperationException from '@tsdotnet/exceptions/dist/InvalidOperationException';
+import { DisposableBase } from '@tsdotnet/disposable';
+import { ArgumentException, ArgumentNullException, InvalidOperationException } from '@tsdotnet/exceptions';
 import { Lazy } from '@tsdotnet/lazy';
 import { OrderedAutoRegistry } from '@tsdotnet/ordered-registry';
 const LISTENER = 'listener';
 export class EventDispatcher extends DisposableBase {
+    _lookup;
+    _registry;
+    _behavior;
+    _publicSubscribe = Lazy.create(() => Object.freeze(this.createSubscribe()));
+    _publicEvent = Lazy.create(() => {
+        const sub = this.createSubscribe();
+        sub.add = (listener) => this.add(listener);
+        sub.register = (listener) => this.add(listener);
+        sub.clear = () => this.clear();
+        sub.remove = (id) => this.remove(id);
+        sub.subscribe = this._publicSubscribe.value;
+        return Object.freeze(sub);
+    });
+    _autoDispose = Lazy.create(() => new EventDispatcher());
     constructor(behavior, finalizer) {
         super('EventDispatcher', finalizer);
-        this._publicSubscribe = Lazy.create(() => Object.freeze(this.createSubscribe()));
-        this._publicEvent = Lazy.create(() => {
-            const sub = this.createSubscribe();
-            sub.add = (listener) => this.add(listener);
-            sub.register = (listener) => this.add(listener);
-            sub.clear = () => this.clear();
-            sub.remove = (id) => this.remove(id);
-            sub.subscribe = this._publicSubscribe.value;
-            return Object.freeze(sub);
-        });
-        this._autoDispose = Lazy.create(() => new EventDispatcher());
         this._behavior = Object.freeze({
-            reversePublish: (behavior === null || behavior === void 0 ? void 0 : behavior.reversePublish) == true,
-            onError: behavior === null || behavior === void 0 ? void 0 : behavior.onError,
-            clearListenersAfterPublish: (behavior === null || behavior === void 0 ? void 0 : behavior.clearListenersAfterPublish) == true
+            reversePublish: behavior?.reversePublish == true,
+            onError: behavior?.onError,
+            clearListenersAfterPublish: behavior?.clearListenersAfterPublish == true
         });
         this._lookup = new WeakMap();
         this._registry = new OrderedAutoRegistry();
@@ -146,8 +147,8 @@ export class EventDispatcher extends DisposableBase {
         this._publicEvent.dispose();
         this._publicSubscribe.dispose();
         const autoDispose = this._autoDispose.valueReference;
-        autoDispose === null || autoDispose === void 0 ? void 0 : autoDispose.dispatch();
-        autoDispose === null || autoDispose === void 0 ? void 0 : autoDispose.dispose();
+        autoDispose?.dispatch();
+        autoDispose?.dispose();
         this._autoDispose.dispose();
     }
     /**
@@ -192,7 +193,6 @@ export class EventDispatcher extends DisposableBase {
         return sub;
     }
 }
-// eslint-disable-next-line @typescript-eslint/no-empty-function
 function dummy() { }
 Object.freeze(dummy);
 //# sourceMappingURL=EventDispatcher.js.map

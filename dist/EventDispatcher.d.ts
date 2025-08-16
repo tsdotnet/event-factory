@@ -2,7 +2,7 @@
  * @author electricessence / https://github.com/electricessence/
  * Licensing: MIT
  */
-import DisposableBase from '@tsdotnet/disposable';
+import { DisposableBase } from '@tsdotnet/disposable';
 import { Event, EventRegistry, Listener, Subscribe } from './Event';
 import { EventDispatchBehavior } from './EventDispatchBehavior';
 export declare class EventDispatcher<T> extends DisposableBase implements EventRegistry<T> {

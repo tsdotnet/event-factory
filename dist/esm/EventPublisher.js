@@ -1,20 +1,18 @@
-"use strict";
 /*!
  * @author electricessence / https://github.com/electricessence/
  * Licensing: MIT
  */
-Object.defineProperty(exports, "__esModule", { value: true });
-const tslib_1 = require("tslib");
-const disposable_1 = tslib_1.__importDefault(require("@tsdotnet/disposable"));
-const lazy_1 = require("@tsdotnet/lazy");
-const ordered_registry_1 = require("@tsdotnet/ordered-registry");
-const EventDispatcher_1 = require("./EventDispatcher");
-class EventPublisher extends disposable_1.default {
+import { DisposableBase } from '@tsdotnet/disposable';
+import { Lazy } from '@tsdotnet/lazy';
+import { OrderedAutoRegistry } from '@tsdotnet/ordered-registry';
+import { EventDispatcher } from './EventDispatcher';
+export default class EventPublisher extends DisposableBase {
+    options;
+    _pre = Lazy.create(() => new OrderedAutoRegistry());
+    _dispatcher = Lazy.create(() => new EventDispatcher(this.options));
+    _post = Lazy.create(() => new OrderedAutoRegistry());
     constructor(options, finalizer) {
         super('EventPublisher', finalizer);
-        this._pre = lazy_1.Lazy.create(() => new ordered_registry_1.OrderedAutoRegistry());
-        this._dispatcher = lazy_1.Lazy.create(() => new EventDispatcher_1.EventDispatcher(this.options));
-        this._post = lazy_1.Lazy.create(() => new ordered_registry_1.OrderedAutoRegistry());
         this.options = createOptions(options);
         Object.freeze(this);
     }
@@ -24,13 +22,12 @@ class EventPublisher extends disposable_1.default {
      * @param value
      */
     set remaining(value) {
-        var _a;
         if (isNaN(value))
             return;
         this.throwIfDisposed('Updating remaining for disposed publisher.');
         this.options.remaining = value;
         if (!value)
-            (_a = this._dispatcher.valueReference) === null || _a === void 0 ? void 0 : _a.clear();
+            this._dispatcher.valueReference?.clear();
     }
     /**
      * Gets the remaining number of publishes that will emit to listeners.
@@ -71,7 +68,6 @@ class EventPublisher extends disposable_1.default {
      * @param payload
      */
     publish(payload) {
-        var _a, _b, _c;
         this.throwIfDisposed();
         const _ = this, o = _.options;
         let r = o.remaining;
@@ -84,7 +80,7 @@ class EventPublisher extends disposable_1.default {
         if (isFinite(r))
             o.remaining = --r;
         try {
-            const d = _._dispatcher.valueReference, pre = (_a = _._pre.valueReference) === null || _a === void 0 ? void 0 : _a.values.toArray(), post = (_b = _._post.valueReference) === null || _b === void 0 ? void 0 : _b.values.toArray();
+            const d = _._dispatcher.valueReference, pre = _._pre.valueReference?.values.toArray(), post = _._post.valueReference?.values.toArray();
             publish(pre, payload);
             if (d)
                 d.dispatch(payload);
@@ -98,19 +94,17 @@ class EventPublisher extends disposable_1.default {
         }
         finally {
             if (r == 0 || o.clearListenersAfterPublish)
-                (_c = _._dispatcher.valueReference) === null || _c === void 0 ? void 0 : _c.clear();
+                _._dispatcher.valueReference?.clear();
         }
     }
     _onDispose() {
-        var _a, _b, _c;
         const d = this._dispatcher;
-        (_a = d.valueReference) === null || _a === void 0 ? void 0 : _a.dispose();
+        d.valueReference?.dispose();
         d.dispose();
-        (_b = cleanReg(this._pre.valueReference)) === null || _b === void 0 ? void 0 : _b.dispose();
-        (_c = cleanReg(this._post.valueReference)) === null || _c === void 0 ? void 0 : _c.dispose();
+        cleanReg(this._pre.valueReference)?.dispose();
+        cleanReg(this._post.valueReference)?.dispose();
     }
 }
-exports.default = EventPublisher;
 function publish(p, payload) {
     if (p)
         for (const e of p)

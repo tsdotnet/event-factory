@@ -1,17 +1,19 @@
+"use strict";
 /*!
  * @author electricessence / https://github.com/electricessence/
  * Licensing: MIT
  */
-import DisposableBase from '@tsdotnet/disposable';
-import { Lazy } from '@tsdotnet/lazy';
-import { OrderedAutoRegistry } from '@tsdotnet/ordered-registry';
-import { EventDispatcher } from './EventDispatcher';
-export default class EventPublisher extends DisposableBase {
+Object.defineProperty(exports, "__esModule", { value: true });
+const disposable_1 = require("@tsdotnet/disposable");
+const lazy_1 = require("@tsdotnet/lazy");
+const ordered_registry_1 = require("@tsdotnet/ordered-registry");
+const EventDispatcher_1 = require("./EventDispatcher");
+class EventPublisher extends disposable_1.DisposableBase {
     constructor(options, finalizer) {
         super('EventPublisher', finalizer);
-        this._pre = Lazy.create(() => new OrderedAutoRegistry());
-        this._dispatcher = Lazy.create(() => new EventDispatcher(this.options));
-        this._post = Lazy.create(() => new OrderedAutoRegistry());
+        this._pre = lazy_1.Lazy.create(() => new ordered_registry_1.OrderedAutoRegistry());
+        this._dispatcher = lazy_1.Lazy.create(() => new EventDispatcher_1.EventDispatcher(this.options));
+        this._post = lazy_1.Lazy.create(() => new ordered_registry_1.OrderedAutoRegistry());
         this.options = createOptions(options);
         Object.freeze(this);
     }
@@ -107,6 +109,7 @@ export default class EventPublisher extends DisposableBase {
         (_c = cleanReg(this._post.valueReference)) === null || _c === void 0 ? void 0 : _c.dispose();
     }
 }
+exports.default = EventPublisher;
 function publish(p, payload) {
     if (p)
         for (const e of p)

@@ -3,10 +3,8 @@
  * Licensing: MIT
  */
 
-import DisposableBase from '@tsdotnet/disposable';
-import ArgumentException from '@tsdotnet/exceptions/dist/ArgumentException';
-import ArgumentNullException from '@tsdotnet/exceptions/dist/ArgumentNullException';
-import InvalidOperationException from '@tsdotnet/exceptions/dist/InvalidOperationException';
+import {DisposableBase} from '@tsdotnet/disposable';
+import {ArgumentException, ArgumentNullException, InvalidOperationException} from '@tsdotnet/exceptions';
 import {Lazy} from '@tsdotnet/lazy';
 import {OrderedAutoRegistry} from '@tsdotnet/ordered-registry';
 import {Event, EventRegistry, Listener, Subscribe} from './Event';
@@ -216,7 +214,6 @@ export class EventDispatcher<T>
 	}
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-function
 function dummy () { }
 
 Object.freeze(dummy);

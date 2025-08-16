@@ -3,8 +3,7 @@
  * Licensing: MIT
  */
 
-import DisposableBase from '@tsdotnet/disposable';
-import Disposable from '@tsdotnet/disposable/dist/Disposable';
+import {DisposableBase, type Disposable} from '@tsdotnet/disposable';
 import {Lazy} from '@tsdotnet/lazy';
 import {OrderedAutoRegistry} from '@tsdotnet/ordered-registry';
 import {EventDispatcher} from './EventDispatcher';

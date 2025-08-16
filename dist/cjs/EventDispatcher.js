@@ -5,15 +5,12 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EventDispatcher = void 0;
-const tslib_1 = require("tslib");
-const disposable_1 = tslib_1.__importDefault(require("@tsdotnet/disposable"));
-const ArgumentException_1 = tslib_1.__importDefault(require("@tsdotnet/exceptions/dist/ArgumentException"));
-const ArgumentNullException_1 = tslib_1.__importDefault(require("@tsdotnet/exceptions/dist/ArgumentNullException"));
-const InvalidOperationException_1 = tslib_1.__importDefault(require("@tsdotnet/exceptions/dist/InvalidOperationException"));
+const disposable_1 = require("@tsdotnet/disposable");
+const exceptions_1 = require("@tsdotnet/exceptions");
 const lazy_1 = require("@tsdotnet/lazy");
 const ordered_registry_1 = require("@tsdotnet/ordered-registry");
 const LISTENER = 'listener';
-class EventDispatcher extends disposable_1.default {
+class EventDispatcher extends disposable_1.DisposableBase {
     constructor(behavior, finalizer) {
         super('EventDispatcher', finalizer);
         this._publicSubscribe = lazy_1.Lazy.create(() => Object.freeze(this.createSubscribe()));
@@ -66,7 +63,7 @@ class EventDispatcher extends disposable_1.default {
      */
     register(listener) {
         if (!listener)
-            throw new ArgumentNullException_1.default(LISTENER);
+            throw new exceptions_1.ArgumentNullException(LISTENER);
         if (this.wasDisposed)
             return NaN;
         if (this._lookup.has(listener))
@@ -93,11 +90,11 @@ class EventDispatcher extends disposable_1.default {
      */
     add(listener) {
         if (!listener)
-            throw new ArgumentNullException_1.default(LISTENER);
+            throw new exceptions_1.ArgumentNullException(LISTENER);
         if (this.wasDisposed)
             return NaN;
         if (this._lookup.has(listener))
-            throw new ArgumentException_1.default(LISTENER, 'is already registered.');
+            throw new exceptions_1.ArgumentException(LISTENER, 'is already registered.');
         return this._registry.add(listener);
     }
     /**
@@ -169,7 +166,7 @@ class EventDispatcher extends disposable_1.default {
                 return listener(payload);
             } : listener);
             if (isNaN(id))
-                throw new InvalidOperationException_1.default('Unable to subscribe to a disposed event.');
+                throw new exceptions_1.InvalidOperationException('Unable to subscribe to a disposed event.');
             return () => { this.remove(id); };
         };
         sub.once = (listener) => {
@@ -197,7 +194,6 @@ class EventDispatcher extends disposable_1.default {
     }
 }
 exports.EventDispatcher = EventDispatcher;
-// eslint-disable-next-line @typescript-eslint/no-empty-function
 function dummy() { }
 Object.freeze(dummy);
 //# sourceMappingURL=EventDispatcher.js.map
