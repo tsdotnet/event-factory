@@ -4,8 +4,8 @@
  */
 import EventPublisher from './EventPublisher';
 import { EventPublisherOptions } from './EventPublisherOptions';
-export { EventPublisher, EventPublisherOptions };
-export { EventDispatchBehavior } from './EventDispatchBehavior';
+export { EventPublisher, type EventPublisherOptions };
+export type { EventDispatchBehavior } from './EventDispatchBehavior';
 export { EventDispatcher } from './EventDispatcher';
-export { Listener, Unsubscribe, Subscribe, Subscribable, SubscribeFn, SubscribableOnce, EventRegistry, Event } from './Event';
+export type { Listener, Unsubscribe, Subscribe, Subscribable, SubscribeFn, SubscribableOnce, EventRegistry, Event } from './Event';
 export default function eventFactory<T = unknown>(options?: EventPublisherOptions | number | null, finalizer?: () => void): EventPublisher<T>;

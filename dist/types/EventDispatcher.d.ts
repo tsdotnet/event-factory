@@ -3,8 +3,8 @@
  * Licensing: MIT
  */
 import { DisposableBase } from '@tsdotnet/disposable';
-import { Event, EventRegistry, Listener, Subscribe } from './Event';
-import { EventDispatchBehavior } from './EventDispatchBehavior';
+import type { Event, EventRegistry, Listener, Subscribe } from './Event';
+import type { EventDispatchBehavior } from './EventDispatchBehavior';
 export declare class EventDispatcher<T> extends DisposableBase implements EventRegistry<T> {
     private readonly _lookup;
     private readonly _registry;
