@@ -33,34 +33,15 @@ class EventDispatcher extends disposable_1.DisposableBase {
         this._registry = new ordered_registry_1.OrderedAutoRegistry();
         Object.freeze(this);
     }
-    /**
-     * The scope independent function for subscribing to an event.
-     * @return {Subscribe<T>}
-     */
     get subscribe() {
         return this._publicSubscribe.value;
     }
-    /**
-     * The scope independent event registry for subscribing and managing listeners.
-     * @return {Readonly<Event<T>>}
-     */
     get event() {
         return this._publicEvent.value;
     }
-    /**
-     * A lazy-initialized event for listening for disposal.
-     * @return {Event<void>}
-     */
     get onDispose() {
         return this._autoDispose.value.event;
     }
-    /**
-     * Registers a listener.
-     * If the listener already exists, nothing changes and the original `Id` is returned.
-     * @throws `ArgumentNullException` if the listener is null.
-     * @param {Listener<T>} listener
-     * @return {number} The registered `Id` of the listener. Returns NaN if this has been disposed.
-     */
     register(listener) {
         if (!listener)
             throw new exceptions_1.ArgumentNullException(LISTENER);
@@ -70,24 +51,12 @@ class EventDispatcher extends disposable_1.DisposableBase {
             return this._lookup.get(listener);
         return this._registry.add(listener);
     }
-    /**
-     * Removes a listener by `Id`.
-     * @param {number} id The registered `Id` of the listener.
-     * @return {Listener<T> | undefined} The listener or undefined if not found.
-     */
     remove(id) {
         const listener = this._registry.remove(id);
         if (listener)
             this._lookup.delete(listener);
         return listener;
     }
-    /**
-     * Attempts to add a listener.
-     * @throws `ArgumentNullException` if the listener is null.
-     * @throws `ArgumentException` if the listener already exists.
-     * @param {Listener<T>} listener
-     * @return {number} The registered `Id` of the listener. Returns NaN if this has been disposed.
-     */
     add(listener) {
         if (!listener)
             throw new exceptions_1.ArgumentNullException(LISTENER);
@@ -97,10 +66,6 @@ class EventDispatcher extends disposable_1.DisposableBase {
             throw new exceptions_1.ArgumentException(LISTENER, 'is already registered.');
         return this._registry.add(listener);
     }
-    /**
-     * Clears all listeners.
-     * @return {number} The number of listeners cleared. Returns NaN if this has been disposed.
-     */
     clear() {
         if (this.wasDisposed)
             return NaN;
@@ -108,11 +73,6 @@ class EventDispatcher extends disposable_1.DisposableBase {
             this._lookup.delete(kvp.value);
         return this._registry.clear();
     }
-    /**
-     * Dispatches payload to listeners.
-     * @throws `ObjectDisposedException` If this has been disposed.
-     * @param payload
-     */
     dispatch(payload) {
         this.throwIfDisposed();
         const reg = this._registry;
@@ -151,13 +111,8 @@ class EventDispatcher extends disposable_1.DisposableBase {
         autoDispose === null || autoDispose === void 0 ? void 0 : autoDispose.dispose();
         this._autoDispose.dispose();
     }
-    /**
-     * Creates a scope independent function for subscribing to an event.
-     * @return {Subscribe<T>}
-     */
     createSubscribe() {
         const sub = (listener, count) => {
-            // Cover 0 or less cases where NaN is considered positive infinity.
             if (typeof count == 'number' && count < 1)
                 return dummy;
             const id = this.register(typeof count == 'number' && isFinite(count) ? (payload) => {
@@ -172,22 +127,19 @@ class EventDispatcher extends disposable_1.DisposableBase {
         sub.once = (listener) => {
             if (listener)
                 return sub(listener, 1);
-            /* NOTE: Since promises are deferred:
-             * we have to be careful to capture an event that happens before initialization. */
             let result;
             const preInit = sub(p => { result = { payload: p }; });
             return new Promise((resolve, reject) => {
                 if (result)
                     resolve(result.payload);
-                preInit(); // Unsubscribe.
-                // Lazy throw if already disposed.
+                preInit();
                 const d = this.onDispose(() => {
                     reject(new Error('Event was disposed.'));
                 });
                 sub((p => {
-                    d(); // remove dispose handler.
+                    d();
                     resolve(p);
-                }), 1); // Resubscribe.  This may throw if disposed.
+                }), 1);
             });
         };
         return sub;

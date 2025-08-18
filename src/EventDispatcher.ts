@@ -143,7 +143,7 @@ export class EventDispatcher<T>
 			if(behavior.reversePublish)
 			{
 				let i = listeners.length;
-				while(--i>=0) listeners[i](payload);
+				while(--i>=0) listeners[i]!(payload);
 			}
 			else
 			{

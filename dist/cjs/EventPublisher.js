@@ -17,11 +17,6 @@ class EventPublisher extends disposable_1.DisposableBase {
         this.options = createOptions(options);
         Object.freeze(this);
     }
-    /**
-     * Sets the remaining number of publishes that will emit to listeners.
-     * A value of zero will clear all listeners.
-     * @param value
-     */
     set remaining(value) {
         var _a;
         if (isNaN(value))
@@ -31,44 +26,21 @@ class EventPublisher extends disposable_1.DisposableBase {
         if (!value)
             (_a = this._dispatcher.valueReference) === null || _a === void 0 ? void 0 : _a.clear();
     }
-    /**
-     * Gets the remaining number of publishes that will emit to listeners.
-     * When this number is zero all listeners are cleared and none can be added.
-     */
     get remaining() {
         const rem = this.options.remaining;
         return typeof rem == 'number' ? rem : Number.POSITIVE_INFINITY;
     }
-    /**
-     * The event dispatcher.
-     */
     get dispatcher() {
         return this._dispatcher.value;
     }
-    /**
-     * Adds an event publisher to be triggered before the event is published.
-     * Disposing the returned `EventPublisher<T>` removes it from it's parent (this).
-     * @param {number | EventPublisherOptions} options
-     * @return {EventPublisher<T>}
-     */
     addPre(options) {
         this.throwIfDisposed();
         return addPub(this._pre.value, options);
     }
-    /**
-     * Adds an event publisher to be triggered after the event is published.
-     * Disposing the returned `EventPublisher<T>` removes it from it's parent (this).
-     * @param {number | EventPublisherOptions} options
-     * @return {EventPublisher<T>}
-     */
     addPost(options) {
         this.throwIfDisposed();
         return addPub(this._post.value, options);
     }
-    /**
-     * Dispatches payload to listeners.
-     * @param payload
-     */
     publish(payload) {
         var _a, _b, _c;
         this.throwIfDisposed();

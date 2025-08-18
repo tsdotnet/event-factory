@@ -1,12 +1,13 @@
+import { DisposableBase } from '@tsdotnet/disposable';
+import { Lazy } from '@tsdotnet/lazy';
+import { OrderedAutoRegistry } from '@tsdotnet/ordered-registry';
+import { EventDispatcher } from './EventDispatcher.js';
+
 /*!
  * @author electricessence / https://github.com/electricessence/
  * Licensing: MIT
  */
-import { DisposableBase } from '@tsdotnet/disposable';
-import { Lazy } from '@tsdotnet/lazy';
-import { OrderedAutoRegistry } from '@tsdotnet/ordered-registry';
-import { EventDispatcher } from './EventDispatcher';
-export default class EventPublisher extends DisposableBase {
+class EventPublisher extends DisposableBase {
     options;
     _pre = Lazy.create(() => new OrderedAutoRegistry());
     _dispatcher = Lazy.create(() => new EventDispatcher(this.options));
@@ -16,11 +17,6 @@ export default class EventPublisher extends DisposableBase {
         this.options = createOptions(options);
         Object.freeze(this);
     }
-    /**
-     * Sets the remaining number of publishes that will emit to listeners.
-     * A value of zero will clear all listeners.
-     * @param value
-     */
     set remaining(value) {
         if (isNaN(value))
             return;
@@ -29,44 +25,21 @@ export default class EventPublisher extends DisposableBase {
         if (!value)
             this._dispatcher.valueReference?.clear();
     }
-    /**
-     * Gets the remaining number of publishes that will emit to listeners.
-     * When this number is zero all listeners are cleared and none can be added.
-     */
     get remaining() {
         const rem = this.options.remaining;
         return typeof rem == 'number' ? rem : Number.POSITIVE_INFINITY;
     }
-    /**
-     * The event dispatcher.
-     */
     get dispatcher() {
         return this._dispatcher.value;
     }
-    /**
-     * Adds an event publisher to be triggered before the event is published.
-     * Disposing the returned `EventPublisher<T>` removes it from it's parent (this).
-     * @param {number | EventPublisherOptions} options
-     * @return {EventPublisher<T>}
-     */
     addPre(options) {
         this.throwIfDisposed();
         return addPub(this._pre.value, options);
     }
-    /**
-     * Adds an event publisher to be triggered after the event is published.
-     * Disposing the returned `EventPublisher<T>` removes it from it's parent (this).
-     * @param {number | EventPublisherOptions} options
-     * @return {EventPublisher<T>}
-     */
     addPost(options) {
         this.throwIfDisposed();
         return addPub(this._post.value, options);
     }
-    /**
-     * Dispatches payload to listeners.
-     * @param payload
-     */
     publish(payload) {
         this.throwIfDisposed();
         const _ = this, o = _.options;
@@ -132,4 +105,6 @@ function cleanReg(reg) {
     reg.clear();
     return reg;
 }
+
+export { EventPublisher as default };
 //# sourceMappingURL=EventPublisher.js.map

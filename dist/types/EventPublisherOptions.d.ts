@@ -12,5 +12,5 @@ export interface EventPublisherOptions
 	 * The remaining number of publishes that will emit to listeners.
 	 * When this number is zero all listeners are cleared and none can be added.
 	 */
-	remaining?: number;
+	remaining?: number | undefined;
 }

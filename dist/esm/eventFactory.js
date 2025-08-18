@@ -1,11 +1,13 @@
+import EventPublisher from './EventPublisher.js';
+export { EventDispatcher } from './EventDispatcher.js';
+
 /*!
  * @author electricessence / https://github.com/electricessence/
  * @license MIT
  */
-import EventPublisher from './EventPublisher';
-export { EventPublisher };
-export { EventDispatcher } from './EventDispatcher';
-export default function eventFactory(options, finalizer) {
+function eventFactory(options, finalizer) {
     return new EventPublisher(options, finalizer);
 }
+
+export { EventPublisher, eventFactory as default };
 //# sourceMappingURL=eventFactory.js.map

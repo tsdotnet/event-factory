@@ -3,7 +3,7 @@
  * Licensing: MIT
  */
 
-import {expect} from 'chai';
+import { describe, it, expect } from 'vitest';
 import EventPublisher from '../src/EventPublisher';
 
 describe('EventPublisher', () => {
@@ -76,7 +76,7 @@ describe('EventPublisher', () => {
 		{
 			const pub = new EventPublisher<void>();
 			pub.dispatcher.event.add(() => { throw ERROR; });
-			expect(() => pub.publish()).to.throw();
+			expect(() => pub.publish()).toThrow();
 		}
 		{
 			let errorOccurred = false;
@@ -87,8 +87,8 @@ describe('EventPublisher', () => {
 				}
 			});
 			pub.dispatcher.event.add(() => { throw ERROR; });
-			expect(() => pub.publish()).not.to.throw();
-			expect(errorOccurred).to.be.true;
+			expect(() => pub.publish()).not.toThrow();
+			expect(errorOccurred).toBe(true);
 		}
 	});
 
@@ -173,7 +173,7 @@ describe('EventPublisher', () => {
 		const pub = new EventPublisher<void>(max);
 		testChildPub(max, pub, pub.addPre(max).addPre(max));
 		pub.dispose();
-		expect(() => pub.publish()).to.throw();
+		expect(() => pub.publish()).toThrow();
 	});
 
 	it('should publish to post events', () => {
@@ -181,7 +181,7 @@ describe('EventPublisher', () => {
 		const pub = new EventPublisher<void>(max);
 		testChildPub(max, pub, pub.addPost(max).addPost(max));
 		pub.dispose();
-		expect(() => pub.publish()).to.throw();
+		expect(() => pub.publish()).toThrow();
 	});
 
 });
