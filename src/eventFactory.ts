@@ -4,7 +4,7 @@
  */
 
 import EventPublisher from './EventPublisher';
-import { EventPublisherOptions } from './EventPublisherOptions';
+import type { EventPublisherOptions } from './EventPublisherOptions';
 
 export { EventPublisher, type EventPublisherOptions };
 export type { EventDispatchBehavior } from './EventDispatchBehavior';
