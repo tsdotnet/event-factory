@@ -21,7 +21,7 @@ export default class EventPublisher<T>
 	constructor (options?: EventPublisherOptions | number | null, finalizer?: () => void);
 	constructor (options?: EventPublisherOptions | number | null, finalizer?: () => void)
 	{
-		super('EventPublisher', finalizer);
+		super(finalizer);
 		this.options = createOptions(options);
 		Object.freeze(this);
 	}
@@ -34,7 +34,7 @@ export default class EventPublisher<T>
 	set remaining (value: number)
 	{
 		if(isNaN(value)) return;
-		this.throwIfDisposed('Updating remaining for disposed publisher.');
+		this.assertIsAlive();
 		this.options.remaining = value;
 		if(!value) this._dispatcher.valueReference?.clear();
 	}
@@ -82,7 +82,7 @@ export default class EventPublisher<T>
 	 */
 	addPre (options?: number | EventPublisherOptions): EventPublisher<T>
 	{
-		this.throwIfDisposed();
+		this.assertIsAlive();
 		return addPub(this._pre.value, options);
 	}
 
@@ -110,7 +110,7 @@ export default class EventPublisher<T>
 	 */
 	addPost (options?: number | EventPublisherOptions): EventPublisher<T>
 	{
-		this.throwIfDisposed();
+		this.assertIsAlive();
 		return addPub(this._post.value, options);
 	}
 
@@ -120,7 +120,7 @@ export default class EventPublisher<T>
 	 */
 	publish (payload: T): void
 	{
-		this.throwIfDisposed();
+		this.assertIsAlive();
 		const _ = this, o = _.options;
 		let r = o.remaining;
 		if(r===0) return;

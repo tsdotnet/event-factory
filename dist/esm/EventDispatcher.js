@@ -24,7 +24,7 @@ class EventDispatcher extends DisposableBase {
     });
     _autoDispose = Lazy.create(() => new EventDispatcher());
     constructor(behavior, finalizer) {
-        super('EventDispatcher', finalizer);
+        super(finalizer);
         this._behavior = Object.freeze({
             reversePublish: behavior?.reversePublish == true,
             onError: behavior?.onError,
@@ -75,7 +75,7 @@ class EventDispatcher extends DisposableBase {
         return this._registry.clear();
     }
     dispatch(payload) {
-        this.throwIfDisposed();
+        this.assertIsAlive();
         const reg = this._registry;
         if (reg.isEmpty)
             return;

@@ -12,7 +12,7 @@ const ordered_registry_1 = require("@tsdotnet/ordered-registry");
 const LISTENER = 'listener';
 class EventDispatcher extends disposable_1.DisposableBase {
     constructor(behavior, finalizer) {
-        super('EventDispatcher', finalizer);
+        super(finalizer);
         this._publicSubscribe = lazy_1.Lazy.create(() => Object.freeze(this.createSubscribe()));
         this._publicEvent = lazy_1.Lazy.create(() => {
             const sub = this.createSubscribe();
@@ -74,7 +74,7 @@ class EventDispatcher extends disposable_1.DisposableBase {
         return this._registry.clear();
     }
     dispatch(payload) {
-        this.throwIfDisposed();
+        this.assertIsAlive();
         const reg = this._registry;
         if (reg.isEmpty)
             return;

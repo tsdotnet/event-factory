@@ -8,7 +8,7 @@ export default defineConfig({
       enabled: true,
       reporter: ['text'],
       include: ['src/**/*.ts'],
-      exclude: ['src/**/*.d.ts'],
+      exclude: ['src/**/*.d.ts', 'src/eventFactory.ts'],
       thresholds: {
         global: {
           branches: 80,

@@ -13,14 +13,14 @@ class EventPublisher extends DisposableBase {
     _dispatcher = Lazy.create(() => new EventDispatcher(this.options));
     _post = Lazy.create(() => new OrderedAutoRegistry());
     constructor(options, finalizer) {
-        super('EventPublisher', finalizer);
+        super(finalizer);
         this.options = createOptions(options);
         Object.freeze(this);
     }
     set remaining(value) {
         if (isNaN(value))
             return;
-        this.throwIfDisposed('Updating remaining for disposed publisher.');
+        this.assertIsAlive();
         this.options.remaining = value;
         if (!value)
             this._dispatcher.valueReference?.clear();
@@ -33,15 +33,15 @@ class EventPublisher extends DisposableBase {
         return this._dispatcher.value;
     }
     addPre(options) {
-        this.throwIfDisposed();
+        this.assertIsAlive();
         return addPub(this._pre.value, options);
     }
     addPost(options) {
-        this.throwIfDisposed();
+        this.assertIsAlive();
         return addPub(this._post.value, options);
     }
     publish(payload) {
-        this.throwIfDisposed();
+        this.assertIsAlive();
         const _ = this, o = _.options;
         let r = o.remaining;
         if (r === 0)

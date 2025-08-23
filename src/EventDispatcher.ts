@@ -33,7 +33,7 @@ export class EventDispatcher<T>
 
 	constructor (behavior?: EventDispatchBehavior, finalizer?: () => void)
 	{
-		super('EventDispatcher', finalizer);
+		super(finalizer);
 		this._behavior = Object.freeze({
 			reversePublish: behavior?.reversePublish==true,
 			onError: behavior?.onError,
@@ -133,7 +133,7 @@ export class EventDispatcher<T>
 	 */
 	dispatch (payload: T): void
 	{
-		this.throwIfDisposed();
+		this.assertIsAlive();
 		const reg = this._registry;
 		if(reg.isEmpty) return;
 		const behavior = this._behavior;

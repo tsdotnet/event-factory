@@ -10,7 +10,7 @@ const ordered_registry_1 = require("@tsdotnet/ordered-registry");
 const EventDispatcher_1 = require("./EventDispatcher");
 class EventPublisher extends disposable_1.DisposableBase {
     constructor(options, finalizer) {
-        super('EventPublisher', finalizer);
+        super(finalizer);
         this._pre = lazy_1.Lazy.create(() => new ordered_registry_1.OrderedAutoRegistry());
         this._dispatcher = lazy_1.Lazy.create(() => new EventDispatcher_1.EventDispatcher(this.options));
         this._post = lazy_1.Lazy.create(() => new ordered_registry_1.OrderedAutoRegistry());
@@ -21,7 +21,7 @@ class EventPublisher extends disposable_1.DisposableBase {
         var _a;
         if (isNaN(value))
             return;
-        this.throwIfDisposed('Updating remaining for disposed publisher.');
+        this.assertIsAlive();
         this.options.remaining = value;
         if (!value)
             (_a = this._dispatcher.valueReference) === null || _a === void 0 ? void 0 : _a.clear();
@@ -34,16 +34,16 @@ class EventPublisher extends disposable_1.DisposableBase {
         return this._dispatcher.value;
     }
     addPre(options) {
-        this.throwIfDisposed();
+        this.assertIsAlive();
         return addPub(this._pre.value, options);
     }
     addPost(options) {
-        this.throwIfDisposed();
+        this.assertIsAlive();
         return addPub(this._post.value, options);
     }
     publish(payload) {
         var _a, _b, _c;
-        this.throwIfDisposed();
+        this.assertIsAlive();
         const _ = this, o = _.options;
         let r = o.remaining;
         if (r === 0)
