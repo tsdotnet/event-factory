@@ -2,7 +2,6 @@
 
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/tsdotnet/event-factory/blob/master/LICENSE)
 ![100% code coverage](https://img.shields.io/badge/coverage-100%25-green)
-![npm-publish](https://github.com/tsdotnet/event-factory/workflows/npm-publish/badge.svg)
 [![npm version](https://img.shields.io/npm/v/@tsdotnet/event-factory.svg?style=flat-square)](https://www.npmjs.com/package/@tsdotnet/event-factory)
 
 A strongly typed protected event creator/publisher/signaler for use with TypeScript and JavaScript.
