@@ -2,7 +2,7 @@
  * @author electricessence / https://github.com/electricessence/
  * Licensing: MIT
  */
-import { Event, EventPublisher } from '../src/EventPublisher';
+import { Event, EventPublisher } from '../src/EventPublisher.js';
 
 export class MyObservable<T> {
 

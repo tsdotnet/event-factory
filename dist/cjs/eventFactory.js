@@ -7,11 +7,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.EventDispatcher = exports.EventPublisher = void 0;
 exports.default = eventFactory;
 const tslib_1 = require("tslib");
-const EventPublisher_1 = tslib_1.__importDefault(require("./EventPublisher"));
-exports.EventPublisher = EventPublisher_1.default;
-var EventDispatcher_1 = require("./EventDispatcher");
-Object.defineProperty(exports, "EventDispatcher", { enumerable: true, get: function () { return EventDispatcher_1.EventDispatcher; } });
+const EventPublisher_js_1 = tslib_1.__importDefault(require("./EventPublisher.js"));
+exports.EventPublisher = EventPublisher_js_1.default;
+var EventDispatcher_js_1 = require("./EventDispatcher.js");
+Object.defineProperty(exports, "EventDispatcher", { enumerable: true, get: function () { return EventDispatcher_js_1.EventDispatcher; } });
 function eventFactory(options, finalizer) {
-    return new EventPublisher_1.default(options, finalizer);
+    return new EventPublisher_js_1.default(options, finalizer);
 }
 //# sourceMappingURL=eventFactory.js.map

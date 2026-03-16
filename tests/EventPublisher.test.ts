@@ -4,7 +4,7 @@
  */
 
 import { describe, it, expect } from 'vitest';
-import EventPublisher from '../src/EventPublisher';
+import EventPublisher from '../src/EventPublisher.js';
 
 describe('EventPublisher', () => {
 	it('should publish events while remaining is positive', () => {

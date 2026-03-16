@@ -5,8 +5,8 @@
 import { DisposableBase } from '@tsdotnet/disposable';
 import { Lazy } from '@tsdotnet/lazy';
 import { OrderedAutoRegistry } from '@tsdotnet/ordered-registry';
-import { EventDispatcher } from './EventDispatcher';
-import { EventPublisherOptions } from './EventPublisherOptions';
+import { EventDispatcher } from './EventDispatcher.js';
+import { EventPublisherOptions } from './EventPublisherOptions.js';
 export default class EventPublisher<T> extends DisposableBase {
     readonly options: EventPublisherOptions;
     protected readonly _pre: Lazy<OrderedAutoRegistry<EventPublisher<T>>>;

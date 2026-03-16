@@ -7,8 +7,8 @@ import {DisposableBase} from '@tsdotnet/disposable';
 import {ArgumentException, ArgumentNullException, InvalidOperationException} from '@tsdotnet/exceptions';
 import {Lazy} from '@tsdotnet/lazy';
 import {OrderedAutoRegistry} from '@tsdotnet/ordered-registry';
-import type {Event, EventRegistry, Listener, Subscribe} from './Event';
-import type {EventDispatchBehavior} from './EventDispatchBehavior';
+import type {Event, EventRegistry, Listener, Subscribe} from './Event.js';
+import type {EventDispatchBehavior} from './EventDispatchBehavior.js';
 
 const LISTENER = 'listener';
 

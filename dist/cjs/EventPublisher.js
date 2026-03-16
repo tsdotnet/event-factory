@@ -7,12 +7,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const disposable_1 = require("@tsdotnet/disposable");
 const lazy_1 = require("@tsdotnet/lazy");
 const ordered_registry_1 = require("@tsdotnet/ordered-registry");
-const EventDispatcher_1 = require("./EventDispatcher");
+const EventDispatcher_js_1 = require("./EventDispatcher.js");
 class EventPublisher extends disposable_1.DisposableBase {
     constructor(options, finalizer) {
         super(finalizer);
         this._pre = lazy_1.Lazy.create(() => new ordered_registry_1.OrderedAutoRegistry());
-        this._dispatcher = lazy_1.Lazy.create(() => new EventDispatcher_1.EventDispatcher(this.options));
+        this._dispatcher = lazy_1.Lazy.create(() => new EventDispatcher_js_1.EventDispatcher(this.options));
         this._post = lazy_1.Lazy.create(() => new ordered_registry_1.OrderedAutoRegistry());
         this.options = createOptions(options);
         Object.freeze(this);

@@ -3,7 +3,7 @@
  * Licensing: MIT
  */
 
-import {EventDispatchBehavior} from './EventDispatchBehavior';
+import {EventDispatchBehavior} from './EventDispatchBehavior.js';
 
 export interface EventPublisherOptions
 	extends EventDispatchBehavior
