@@ -1,4 +1,4 @@
-<a href="https://tsdotnet.github.io/event-factory/"><img src="https://cdn.jsdelivr.net/gh/tsdotnet/event-factory@master/assets/banner.svg" alt="@tsdotnet/event-factory: Publish once. Many listen. Typed events with clean unsubscribe."></a>
+<a name="banner"><img src="https://cdn.jsdelivr.net/gh/tsdotnet/event-factory@master/assets/banner.svg" alt="@tsdotnet/event-factory: Publish once. Many listen. Typed events with clean unsubscribe."></a>
 
 [![npm version](https://img.shields.io/npm/v/@tsdotnet/event-factory.svg?style=flat-square)](https://www.npmjs.com/package/@tsdotnet/event-factory)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](https://github.com/tsdotnet/event-factory/blob/master/LICENSE)
