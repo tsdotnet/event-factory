@@ -68,12 +68,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/electricessence/EventPublisher.git"
+    "url": "git+https://github.com/tsdotnet/event-factory.git"
   },
   "bugs": {
-    "url": "https://github.com/electricessence/EventPublisher/issues"
+    "url": "https://github.com/tsdotnet/event-factory/issues"
   },
-  "homepage": "https://github.com/electricessence/EventPublisher#readme",
+  "homepage": "https://github.com/tsdotnet/event-factory#readme",
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@rollup/plugin-terser": "^1.0.2",
